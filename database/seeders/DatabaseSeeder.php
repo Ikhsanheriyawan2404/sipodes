@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Laravolt\Indonesia\Seeds\{VillagesSeeder, ProvincesSeeder, CitiesSeeder, DistrictsSeeder};
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +15,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            ProvincesSeeder::class,
+            CitiesSeeder::class,
+            DistrictsSeeder::class,
+            VillagesSeeder::class,
+            DesaSeeder::class,
             UserSeeder::class,
         ]);
     }

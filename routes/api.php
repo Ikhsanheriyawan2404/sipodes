@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\API\V1\AuthController;
+use App\Http\Controllers\API\V1\DesaController;
+use App\Http\Controllers\API\V1\WisataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +19,8 @@ use App\Http\Controllers\API\V1\AuthController;
 */
 
 Route::prefix('v1')->group(function () {
+    Route::post('wisata', [WisataController::class, 'store']);
+    Route::post('villages', [DesaController::class, 'store']);
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
 
@@ -24,7 +28,6 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('users', UserController::class);
 
         Route::post('logout', [AuthController::class, 'logout']);
-
     });
 });
 

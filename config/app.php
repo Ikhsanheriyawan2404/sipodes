@@ -53,6 +53,7 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'parent_url' => env('PARENT_URL', 'http://127.0.0.1:8001/api/v1'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -165,6 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Laravolt\Indonesia\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +231,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Indonesia' => Laravolt\Indonesia\Facade::class,
 
     ],
 
