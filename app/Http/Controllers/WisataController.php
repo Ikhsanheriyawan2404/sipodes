@@ -84,13 +84,13 @@ class WisataController extends Controller
         ];
 
         $client = new \GuzzleHttp\Client();
-        $url = env('PARENT_URL') . '/wisata';
+        $url = env('PARENT_URL') . '/wisata/' . $wisata->id;
         try {
             DB::transaction(function () use ($params, $url, $client) {
                 $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
                 Wisata::create($params);
                 $params['code_desa'] = Desa::first()->code;
-                $client->post($url, ['form_params' => $params]);
+                $client->put($url, ['form_params' => $params]);
             });
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -126,5 +126,23 @@ class WisataController extends Controller
         $gambar->delete();
         Storage::delete($gambar->image);
         return redirect()->back()->with('success', 'Gambar berhasil dihapus');
+    }
+
+    public function destroy($id)
+    {
+        $wisata = Wisata::find($id);
+
+        $client = new \GuzzleHttp\Client();
+        $url = env('PARENT_URL') . '/wisata/' . $wisata->id;
+        try {
+            DB::transaction(function () use ($wisata, $url, $client) {
+                $wisata->delete();
+                Storage::delete($wisata->image);
+                $client->delete($url);
+            });
+        } catch(\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+        return redirect()->back()->with('success', 'Data wisata berhasil dihapus');
     }
 }
