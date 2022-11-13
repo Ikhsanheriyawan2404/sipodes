@@ -28,8 +28,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('wisata', [WisataController::class, 'index'])->name('wisata.index');
     Route::get('wisata/create', [WisataController::class, 'create'])->name('wisata.create');
+    Route::get('wisata/{id}', [WisataController::class, 'show'])->name('wisata.show');
     Route::post('wisata', [WisataController::class, 'store'])->name('wisata.store');
     Route::get('wisata/{wisata}/edit', [WisataController::class, 'edit'])->name('wisata.edit');
+
+    Route::get('wisata/{wisata}/gambar', [WisataController::class, 'pageUpload'])->name('wisata.gambar');
+    Route::post('wisata/{wisata}/gambar', [WisataController::class, 'upload'])->name('wisata.upload');
+    Route::delete('wisata/{gambar}/gambar', [WisataController::class, 'deleteImage'])->name('wisata.deleteImage');
 });
 
 

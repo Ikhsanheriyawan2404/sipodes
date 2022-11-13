@@ -5,6 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <a href="{{ route('wisata.index', []) }}" class="btn btn-sm btn-primary my-3">Kembali</a>
+            @include('components.alerts')
             <div class="card">
                 <div class="card-header">{{ __('Data Wisata') }}</div>
 

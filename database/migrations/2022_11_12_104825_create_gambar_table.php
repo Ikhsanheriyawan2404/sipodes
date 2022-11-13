@@ -20,7 +20,7 @@ class CreateGambarTable extends Migration
             $table->unsignedBigInteger('produksi_pangan_id')->nullable();
             $table->unsignedBigInteger('budaya_id')->nullable();
             $table->string('image');
-            $table->string('alt');
+            $table->string('alt')->nullable();
             $table->timestamps();
         });
     }

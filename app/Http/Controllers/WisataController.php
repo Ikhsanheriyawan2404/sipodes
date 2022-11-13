@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gambar;
+use App\Models\{Desa, Wisata};
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\WisataStoreRequest;
-use App\Models\Wisata;
-use Illuminate\Http\Request;
 
 class WisataController extends Controller
 {
@@ -35,15 +37,52 @@ class WisataController extends Controller
             'meta_keyword' => request('meta_keyword'),
         ];
 
-        $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
-        Wisata::create($params);
-
         $client = new \GuzzleHttp\Client();
         $url = env('PARENT_URL') . '/wisata';
+        try {
+            DB::transaction(function () use ($params, $url, $client) {
+                $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
+                Wisata::create($params);
+                $params['code_desa'] = Desa::first()->code;
+                $client->post($url, ['form_params' => $params]);
+            });
+        } catch(\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
 
-        $response = $client->post($url, ['headers' => ['Accept', 'application/json']], ['form_params' => $params]);
-        $response = $response->getBody()->getContents();
+        return redirect()->route('wisata.index')->with('success', 'Data wisata berhasil dimasukkan!');
+    }
 
-        return redirect()->route('wisata.index');
+    public function show($id)
+    {
+        $wisata = Wisata::find($id);
+        return response()->json($wisata);
+    }
+
+    public function pageUpload(Wisata $wisata)
+    {
+        return view('wisata.upload', [
+            'wisata' => $wisata,
+        ]);
+    }
+
+    public function upload(Wisata $wisata)
+    {
+        request()->validate([
+            'image' => 'required'
+        ]);
+        Gambar::create([
+            'wisata_id' => $wisata->id,
+            'image' => request()->file('image')->store('img/wisata'),
+            'alt' => request('alt'),
+        ]);
+        return redirect()->back()->with('success', 'Gambar baru berhasil ditambahkan');
+    }
+
+    public function deleteImage(Gambar $gambar)
+    {
+        $gambar->delete();
+        Storage::delete($gambar->image);
+        return redirect()->back()->with('success', 'Gambar berhasil dihapus');
     }
 }

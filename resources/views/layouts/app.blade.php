@@ -56,7 +56,7 @@
                                 <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('Desa') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('Wisata') }}</a>
+                                <a class="nav-link" href="{{ route('wisata.index') }}">{{ __('Wisata') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('Budaya') }}</a>
