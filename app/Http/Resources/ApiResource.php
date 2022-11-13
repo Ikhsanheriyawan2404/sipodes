@@ -9,9 +9,10 @@ class ApiResource extends JsonResource
     public $status;
     public $message;
 
-    public function __construct($status, $message, $resource = [])
+    public function __construct($code, $status, $message, $resource = [])
     {
         parent::__construct($resource);
+        $this->code = $code;
         $this->status = $status;
         $this->message = $message;
     }
@@ -19,8 +20,11 @@ class ApiResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'status'   => $this->status,
-            'message'  => $this->message,
+            'meta' => [
+                'code'     => $this->code,
+                'status'   => $this->status,
+                'message'  => $this->message,
+            ],
             'data'     => $this->resource
         ];
     }

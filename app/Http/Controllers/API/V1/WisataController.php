@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\Desa;
-use App\Models\Wisata;
+use App\Models\{Desa, Gambar, Wisata};
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
+use App\Http\Resources\ApiResource;
 
 class WisataController extends Controller
 {
-    public function create()
+    public function index()
     {
-        return view('wisata.create');
+        $wisata =  Wisata::with('images')->get();
+        foreach ($wisata as $data) {
+            $data->thumbnail = $data->imagePath;
+        }
+        return new ApiResource(200, true, 'List Wisata', $wisata);
     }
 
     public function store()
@@ -50,29 +53,18 @@ class WisataController extends Controller
         ];
         $response = $client->post($url, ['form_params' => $form_params]);
         $response = $response->getBody()->getContents();
-        // $response = Http::post($url, [
-        //     'name' => request('name'),
-        //     'description' => request('description'),
-        //     'location' => request('location'),
-        //     'price' => request('price'),
-        //     'contact' => request('contact'),
-        // ]);
 
         return response()->json($response, 200);
     }
 
-    public function storeWisata()
+    public function upload($id)
     {
-        request()->validate([
-            'title' => 'required',
-            'description' => 'required',
+        $wisata = Wisata::find($id);
+        Gambar::create([
+            'wisata_id' => $wisata->id,
+            'image' => request()->file('image')->store('img/wisata'),
+            'alt' => request('alt'),
         ]);
-
-        Wisata::create([
-            'title' => request('title'),
-            'description' => request('description'),
-        ]);
-
-        return redirect()->route('wisata.create');
+        return response()->json('berhasil memasukan photo', 200);
     }
 }

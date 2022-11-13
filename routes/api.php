@@ -19,7 +19,10 @@ use App\Http\Controllers\API\V1\WisataController;
 */
 
 Route::prefix('v1')->group(function () {
+    Route::get('wisata', [WisataController::class, 'index']);
+    Route::post('wisata/{id}/image', [WisataController::class, 'upload']);
     Route::post('wisata', [WisataController::class, 'store']);
+    Route::get('desa', [DesaController::class, 'index']);
     Route::post('villages', [DesaController::class, 'store']);
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
