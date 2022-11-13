@@ -10,7 +10,7 @@
                 <div class="card-header">{{ __('Edit Data Wisata') }}</div>
 
                 <div class="card-body table-responsive">
-                    <form action="{{ route('wisata.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('wisata.update', $wisata->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         @include('wisata.form-control.partials')

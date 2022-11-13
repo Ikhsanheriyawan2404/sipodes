@@ -49,10 +49,10 @@ class WisataController extends Controller
                 $client->post($url, ['form_params' => $params]);
             });
         } catch(\Exception $e) {
-            return response()->json(new ApiResource(400, false, $e->getMessage()));
+            return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
         }
 
-        return response()->json(new ApiResource(201, true, 'Data Wisata Berhasil Dimasukkan'));
+        return response()->json(new ApiResource(201, true, 'Data Wisata Berhasil Dimasukkan'), 201);
     }
 
     public function upload($id)
