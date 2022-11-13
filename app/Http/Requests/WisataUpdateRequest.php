@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WisataStoreRequest extends FormRequest
+class WisataUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,7 +30,7 @@ class WisataStoreRequest extends FormRequest
             'longtitude' => 'required|max:10',
             'latitude' => 'required|max:10',
             'price' => 'required|max:255',
-            'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2058',
+            'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
         ];
     }
 }

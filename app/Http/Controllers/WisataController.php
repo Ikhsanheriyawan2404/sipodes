@@ -6,7 +6,7 @@ use App\Models\Gambar;
 use App\Models\{Desa, Wisata};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\WisataStoreRequest;
+use App\Http\Requests\{WisataStoreRequest, WisataUpdateRequest};
 
 class WisataController extends Controller
 {
@@ -59,15 +59,57 @@ class WisataController extends Controller
         return response()->json($wisata);
     }
 
-    public function pageUpload(Wisata $wisata)
+    public function edit($id)
     {
+        $wisata = Wisata::find($id);
+        return view('wisata.edit', [
+            'wisata' => $wisata,
+        ]);
+    }
+
+    public function update(WisataUpdateRequest $request, $id)
+    {
+        $wisata = Wisata::find($id);
+        $request->validated();
+
+        $params = [
+            'name' => request('name'),
+            'description' => request('description'),
+            'location' => request('location'),
+            'price' => request('price'),
+            'longtitude' => request('longtitude'),
+            'latitude' => request('latitude'),
+            'meta_description' => request('meta_description'),
+            'meta_keyword' => request('meta_keyword'),
+        ];
+
+        $client = new \GuzzleHttp\Client();
+        $url = env('PARENT_URL') . '/wisata';
+        try {
+            DB::transaction(function () use ($params, $url, $client) {
+                $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
+                Wisata::create($params);
+                $params['code_desa'] = Desa::first()->code;
+                $client->post($url, ['form_params' => $params]);
+            });
+        } catch(\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
+        return redirect()->route('wisata.index')->with('success', 'Data wisata berhasil dimasukkan!');
+    }
+
+    public function pageUpload($id)
+    {
+        $wisata = Wisata::find($id);
         return view('wisata.upload', [
             'wisata' => $wisata,
         ]);
     }
 
-    public function upload(Wisata $wisata)
+    public function upload($id)
     {
+        $wisata = Wisata::find($id);
         request()->validate([
             'image' => 'required'
         ]);

@@ -19,19 +19,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('home', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+
     Route::get('villages', [DesaController::class, 'index'])->name('desa.index');
     Route::get('villages/create', [DesaController::class, 'create'])->name('desa.create');
     Route::post('villages', [DesaController::class, 'store'])->name('desa.store');
 
-    Route::get('wisata', [WisataController::class, 'index'])->name('wisata.index');
-    Route::get('wisata/create', [WisataController::class, 'create'])->name('wisata.create');
-    Route::get('wisata/{id}', [WisataController::class, 'show'])->name('wisata.show');
-    Route::post('wisata', [WisataController::class, 'store'])->name('wisata.store');
-    Route::get('wisata/{wisata}/edit', [WisataController::class, 'edit'])->name('wisata.edit');
-
+    // Wisata
+    Route::resource('wisata', WisataController::class);
     Route::get('wisata/{wisata}/gambar', [WisataController::class, 'pageUpload'])->name('wisata.gambar');
     Route::post('wisata/{wisata}/gambar', [WisataController::class, 'upload'])->name('wisata.upload');
     Route::delete('wisata/{gambar}/gambar', [WisataController::class, 'deleteImage'])->name('wisata.deleteImage');
