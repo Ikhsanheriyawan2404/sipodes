@@ -20,7 +20,7 @@
         </div>
         <div class="form-group">
             <label for="description">Deskripsi <span class="text-danger">*</span></label>
-            <textarea name="description" id="description" class="form-control form-control-sm"></textarea>
+            <textarea name="description" id="description" class="form-control form-control-sm">{{ $wisata->description ?? old('description') }}</textarea>
             @error('description')
                 <small class="text-danger">
                     {{ $message }}

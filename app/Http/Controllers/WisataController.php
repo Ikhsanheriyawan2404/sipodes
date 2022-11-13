@@ -83,12 +83,21 @@ class WisataController extends Controller
             'meta_keyword' => request('meta_keyword'),
         ];
 
+        if (request('thumbnail')) {
+            // Jika ada request maka delete old img
+            Storage::delete($wisata->thumbnail);
+            $thumbnail = request()->file('thumbnail')->store('img/thumbnail');
+        } else if ($wisata->thumbnail) {
+            // jika tidak ada biarkan old thumbnail
+            $thumbnail = $wisata->thumbnail;
+        }
+
         $client = new \GuzzleHttp\Client();
         $url = env('PARENT_URL') . '/wisata/' . $wisata->id;
         try {
-            DB::transaction(function () use ($params, $url, $client) {
-                $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
-                Wisata::create($params);
+            DB::transaction(function () use ($params, $url, $client, $thumbnail, $wisata) {
+                $params['thumbnail'] = $thumbnail;
+                $wisata->update($params);
                 $params['code_desa'] = Desa::first()->code;
                 $client->put($url, ['form_params' => $params]);
             });
