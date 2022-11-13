@@ -16,13 +16,14 @@ class CreateWisataTable extends Migration
         Schema::create('wisata', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('meta_description')->nullable();
+            $table->string('meta_keyword')->nullable();
             $table->string('thumbnail');
             $table->string('location');
-            $table->string('price');
-            $table->string('contact');
+            $table->string('price')->nullable();
             $table->text('description');
-            $table->string('latitude');
-            $table->string('longtitude');
+            $table->float('latitude');
+            $table->float('longtitude');
             $table->timestamps();
         });
     }

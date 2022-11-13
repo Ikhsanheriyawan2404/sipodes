@@ -18,6 +18,7 @@ class CreateDesaTable extends Migration
             $table->char('code', 10);
             $table->char('district_code', 7);
             $table->char('city_code', 4);
+            $table->string('url');
             // $table->string('longitude');
             // $table->string('latitude');
             $table->text('description')->nullable();

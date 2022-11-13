@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Desa;
 use Faker\Factory;
+use App\Models\Desa;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\URL;
 
 class DesaSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DesaSeeder extends Seeder
             'district_code' => '320937',
             'city_code' => '3209',
             'logo' => $faker->imageUrl(640, 480, 'gmabar', true, 'dsafsadf', true),
+            'url' => URL::to('/'),
         ]);
     }
 }

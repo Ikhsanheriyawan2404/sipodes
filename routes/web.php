@@ -2,10 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\WisataController;
 use App\Http\Controllers\DropdownController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\API\V1\DesaController;
-use App\Http\Controllers\API\V1\WisataController;
 
 Route::get('kota', [DropdownController::class, 'kota'])->name('dropdown.kota');
 Route::get('kecamatan', [DropdownController::class, 'kecamatan'])->name('dropdown.kecamatan');
@@ -26,8 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::get('villages/create', [DesaController::class, 'create'])->name('desa.create');
     Route::post('villages', [DesaController::class, 'store'])->name('desa.store');
 
+    Route::get('wisata', [WisataController::class, 'index'])->name('wisata.index');
     Route::get('wisata/create', [WisataController::class, 'create'])->name('wisata.create');
-    Route::post('wisata', [WisataController::class, 'storeWisata'])->name('wisata.store');
+    Route::post('wisata', [WisataController::class, 'store'])->name('wisata.store');
+    Route::get('wisata/{wisata}/edit', [WisataController::class, 'edit'])->name('wisata.edit');
 });
 
 

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\{Desa, Gambar, Wisata};
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
+use App\Http\Controllers\Controller;
+use App\Models\{Desa, Gambar, Wisata};
+use App\Http\Requests\WisataStoreRequest;
 
 class WisataController extends Controller
 {
@@ -17,44 +19,40 @@ class WisataController extends Controller
         return new ApiResource(200, true, 'List Wisata', $wisata);
     }
 
-    public function store()
+    public function store(WisataStoreRequest $request)
     {
-        request()->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'price' => 'required',
-            'contact' => 'required',
-            'thumbnail' => 'required',
-        ]);
+        // Validation
+        $request->validated();
 
+        // Request Body
         $params = [
             'name' => request('name'),
             'description' => request('description'),
             'location' => request('location'),
             'price' => request('price'),
-            'contact' => request('contact'),
-            'thumbnail' => request()->file('thumbnail')->store('img/wisata'),
+            'longtitude' => request('longtitude'),
+            'latitude' => request('latitude'),
+            'meta_description' => request('meta_description'),
+            'meta_keyword' => request('meta_keyword'),
         ];
 
-        $data = Wisata::create($params);
-
+        // Set HTTP Client
         $client = new \GuzzleHttp\Client();
+        // Url app parent
         $url = env('PARENT_URL') . '/wisata';
 
-        $form_params = [
-            'name' => $data->name,
-            'description' => $data->description,
-            'location' => $data->location,
-            'price' => $data->price,
-            'contact' => $data->contact,
-            // 'thumbnail' => $data->thumbnail,
-            'code_desa' => Desa::find(1)->code,
-        ];
-        $response = $client->post($url, ['form_params' => $form_params]);
-        $response = $response->getBody()->getContents();
+        try {
+            DB::transaction(function () use ($params, $url, $client) {
+                $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
+                Wisata::create($params);
+                $params['code_desa'] = Desa::first()->code;
+                $client->post($url, ['form_params' => $params]);
+            });
+        } catch(\Exception $e) {
+            return response()->json(new ApiResource(400, true, $e->getMessage()));
+        }
 
-        return response()->json($response, 200);
+        return response()->json(new ApiResource(201, true, 'Data Wisata Berhasil Dimasukkan'));
     }
 
     public function upload($id)
