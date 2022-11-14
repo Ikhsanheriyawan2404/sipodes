@@ -66,4 +66,24 @@ class WisataController extends Controller
         ]);
         return response()->json('berhasil memasukan photo', 200);
     }
+
+    public function destroy($id)
+    {
+        $wisata = Wisata::find($id);
+        if (!$wisata) {
+            return response()->json(new ApiResource(404, false, 'Data Wisata Tidak Ditemukan'), 404);
+        }
+
+        $client = new \GuzzleHttp\Client();
+        $url = env('PARENT_URL') . '/wisata/'. Desa::first()->code . '/' . $wisata->id;
+        try {
+            DB::transaction(function () use ($wisata, $client, $url) {
+                $wisata->delete();
+                $client->delete($url);
+            });
+            return response()->json(new ApiResource(200, true, 'Data Wisata Berhasil Dihapus'), 200);
+        } catch (\Exception $e) {
+            return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
+        }
+    }
 }
