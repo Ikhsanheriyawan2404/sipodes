@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             CitiesSeeder::class,
             DistrictsSeeder::class,
             VillagesSeeder::class,
-            DesaSeeder::class,
+            // DesaSeeder::class,
             UserSeeder::class,
         ]);
     }

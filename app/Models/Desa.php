@@ -13,7 +13,7 @@ class Desa extends Model
     use HasFactory;
 
     protected $table = 'desa';
-    protected $fillable = ['code', 'name', 'district_code', 'city_code'];
+    protected $fillable = ['code', 'description', 'district_code', 'city_code', 'url', 'logo'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function desa()

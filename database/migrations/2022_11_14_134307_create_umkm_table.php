@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWisataTable extends Migration
+class CreateUmkmTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateWisataTable extends Migration
      */
     public function up()
     {
-        Schema::create('wisata', function (Blueprint $table) {
+        Schema::create('umkm', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('meta_description')->nullable();
             $table->string('meta_keyword')->nullable();
             $table->string('thumbnail');
-            $table->string('location');
-            $table->string('price')->nullable();
+            $table->string('contact');
             $table->text('description');
-            $table->float('latitude',10,7);
-            $table->float('longtitude',10,7);
             $table->timestamps();
         });
     }
@@ -34,6 +31,6 @@ class CreateWisataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wisatas');
+        Schema::dropIfExists('umkms');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
 use App\Models\{Desa, Gambar, Wisata};
-use App\Http\Requests\WisataStoreRequest;
+use App\Http\Requests\{WisataStoreRequest, WisataUpdateRequest};
 
 class WisataController extends Controller
 {
@@ -17,6 +17,13 @@ class WisataController extends Controller
             $data->thumbnail = $data->imagePath;
         }
         return new ApiResource(200, true, 'List Wisata', $wisata);
+    }
+
+    public function show($id)
+    {
+        $wisata = Wisata::find($id);
+        $wisata->thumbnail = $wisata->imagePath;
+        return new ApiResource(200, true, 'List Wisata', $wisata); 
     }
 
     public function store(WisataStoreRequest $request)
@@ -67,6 +74,46 @@ class WisataController extends Controller
         return response()->json('berhasil memasukan photo', 200);
     }
 
+    public function update(WisataUpdateRequest $request, $id)
+    {
+        $request->validated();
+        $wisata = Wisata::find($id);
+        $params = [
+            'name' => request('name'),
+            'description' => request('description'),
+            'location' => request('location'),
+            'price' => request('price'),
+            'longtitude' => request('longtitude'),
+            'latitude' => request('latitude'),
+            'meta_description' => request('meta_description'),
+            'meta_keyword' => request('meta_keyword'),
+        ];
+
+        if (request('thumbnail')) {
+            Storage::delete($wisata->thumbnail);
+            $thumbnail = request()->file('thumbnail')->store('img/wisata');
+        } else if ($wisata->thumbnail) {
+            $thumbnail = $wisata->thumbnail;
+        }
+
+        $client = new \GuzzleHttp\Client();
+        $url = env('PARENT_URL') . '/wisata/' . Desa::first()->code . '/' . $wisata->id;
+
+        try {
+            DB::transaction(function () use ($params, $url, $client, $thumbnail, $wisata) {
+                $params['thumbnail'] = $thumbnail;
+                $wisata->update($params);
+                $params['code_desa'] = Desa::first()->code;
+                $params['wisata_id'] = $wisata->id;
+                $client->put($url, ['form_params' => $params]);
+            });
+        } catch(\Exception $e) {
+            return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
+        }
+
+        return response()->json(new ApiResource(200, true, 'Data Wisata Berhasil Diupdate'), 200);
+    }
+
     public function destroy($id)
     {
         $wisata = Wisata::find($id);
@@ -80,10 +127,11 @@ class WisataController extends Controller
             DB::transaction(function () use ($wisata, $client, $url) {
                 $wisata->delete();
                 $client->delete($url);
+                Storage::delete($wisata->thumbnail);
             });
-            return response()->json(new ApiResource(200, true, 'Data Wisata Berhasil Dihapus'), 200);
         } catch (\Exception $e) {
             return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
         }
+        return response()->json(new ApiResource(200, true, 'Data Wisata Berhasil Dihapus'), 200);
     }
 }

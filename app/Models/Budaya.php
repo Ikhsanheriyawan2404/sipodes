@@ -4,14 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\URL;
 
-class Wisata extends Model
+class Budaya extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'price', 'description', 'latitude', 'longtitude'];
-    protected $table = 'wisata';
+    protected $fillable = ['name', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'description'];
+    protected $table = 'budaya';
     protected $hidden = ['updated_at'];
     protected $casts = [
         'created_at' => 'datetime:d-m-Y',
@@ -24,6 +23,6 @@ class Wisata extends Model
 
     public function images()
     {
-        return $this->hasMany(Gambar::class, 'wisata_id');
+        return $this->hasMany(Gambar::class, 'budaya_id');
     }
 }
