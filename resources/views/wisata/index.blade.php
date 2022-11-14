@@ -32,9 +32,14 @@
                                 <td>{{ $data->latitude }}</td>
                                 <td>{{ $data->longtitude }}</td>
                                 <td>
+                                    <form action="{{ route('wisata.destroy', $data->id) }}" method="post">
                                     <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $data->id }}" id="btnDetails">Detail</a>
                                     <a class="btn btn-sm btn-primary" href="{{ route('wisata.gambar', $data->id) }}">Tambah Gambar</a>
                                     <a class="btn btn-sm btn-success" href="{{ route('wisata.edit', $data->id) }}">Edit</a>
+                                    @csrf
+                                    @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach

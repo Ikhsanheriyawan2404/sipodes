@@ -44,8 +44,9 @@ class WisataController extends Controller
         try {
             DB::transaction(function () use ($params, $url, $client) {
                 $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
-                Wisata::create($params);
+                $wisata = Wisata::create($params);
                 $params['code_desa'] = Desa::first()->code;
+                $params['wisata_id'] = $wisata->id;
                 $client->post($url, ['form_params' => $params]);
             });
         } catch(\Exception $e) {
