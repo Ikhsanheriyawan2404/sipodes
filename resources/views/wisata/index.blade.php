@@ -58,20 +58,25 @@ aria-hidden="true">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="detailsModal">Wisata Detail</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
                 <ul class="list-group" id="kontol">
-                    <button class="list-group-item-action list-group-item">Email : <i id="email"></i></button>
                     <button class="list-group-item-action list-group-item">Nama : <i id="name"></i></button>
+                    <button class="list-group-item-action list-group-item">Lokasi : <i id="location"></i></button>
+                    <button class="list-group-item-action list-group-item">Harga Tiket : <i id="price"></i></button>
+                    <button class="list-group-item-action list-group-item">Latitude : <i id="latitude"></i></button>
+                    <button class="list-group-item-action list-group-item">Longtitude : <i id="longtitude"></i></button>
+                    <button class="list-group-item-action list-group-item"><img id="thumbnail" width="200"></button>
+                    <button class="list-group-item-action list-group-item"><i id="description"></i></button>
                     <button class="list-group-item-action list-group-item">Dibuat : <i id="createdAt"></i></button>
-                    <button class="list-group-item-action list-group-item">Role : <i id="roles"></i></button>
+                    <button class="list-group-item-action list-group-item"><i id="images"></i></button>
                 </ul>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -88,11 +93,18 @@ aria-hidden="true">
                     $('#detailsModal').modal('show');
                     $('#wisata_id').val(data.id);
                     $('#name').html(data.name);
+                    $('#location').html(data.location);
+                    $('#price').html(data.price);
+                    $('#latitude').html(data.latitude);
+                    $('#longtitude').html(data.longtitude);
+                    $('#description').html(data.description);
+                    $('#createdAt').html(data.created_at);
+                    $('#thumbnail').attr('src', '/storage/' + data.thumbnail);
                     $.each(data.images, function (key, value) {
-                        $('#roles').append(`<img src="${value.image}" width="100">`);
+                        $('i#images').append('<img src="/storage/'+ value.image +'" width="200" class="images">');
                     })
                 })
-                $('button.roles').remove();
+                $('img.images').remove();
             })
         });
     </script>

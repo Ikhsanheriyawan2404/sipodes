@@ -13,6 +13,9 @@ class ProduksiPanganController extends Controller
         $produksiPangan =  ProduksiPangan::with('images')->get();
         foreach ($produksiPangan as $data) {
             $data->thumbnail = $data->imagePath;
+            foreach($data->images as $item) {
+                $item->image = $item->imagePath;
+            }
         }
         return new ApiResource(200, true, 'List Produksi Pangan', $produksiPangan);
     }

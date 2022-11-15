@@ -41,7 +41,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->alt }}</td>
-                                <td><img src="{{ $data->image }}" alt="{{ $data->alt }}" width="100"></td>
+                                <td><img src="{{ $data->imagePath }}" alt="{{ $data->alt }}" width="100"></td>
                                 <td>
                                     <form action="{{ route('wisata.deleteImage', $data->id) }}" method="post">
                                         @csrf

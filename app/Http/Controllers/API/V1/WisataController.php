@@ -17,6 +17,9 @@ class WisataController extends Controller
         $wisata =  Wisata::with('images')->get();
         foreach ($wisata as $data) {
             $data->thumbnail = $data->imagePath;
+            foreach($data->images as $item) {
+                $item->image = $item->imagePath;
+            }
         }
         return new ApiResource(200, true, 'List Wisata', $wisata);
     }
@@ -72,18 +75,31 @@ class WisataController extends Controller
     public function upload($id)
     {
         $wisata = Wisata::find($id);
+        if (!$wisata) {
+            return new ApiResource(404, true, 'Data tidak ditemukan');
+        }
         Gambar::create([
             'wisata_id' => $wisata->id,
             'image' => request()->file('image')->store('img/wisata'),
             'alt' => request('alt'),
         ]);
-        return response()->json('berhasil memasukan photo', 200);
+        return response()->json(new ApiResource(200, true, 'Data Gambar Wisata Berhasil Dimasukkan'), 200);
+    }
+
+    public function deleteImage(Gambar $gambar)
+    {
+        $gambar->delete();
+        Storage::delete($gambar->image);
+        return response()->json(new ApiResource(200, true, 'Data Gambar Wisata Berhasil Dihapus'), 200);
     }
 
     public function update(WisataUpdateRequest $request, $id)
     {
         $request->validated();
         $wisata = Wisata::find($id);
+        if (!$wisata) {
+            return new ApiResource(404, true, 'Data tidak ditemukan');
+        }
         $params = [
             'name' => request('name'),
             'description' => request('description'),
@@ -131,6 +147,9 @@ class WisataController extends Controller
         $url = env('PARENT_URL') . '/wisata/'. Desa::first()->code . '/' . $wisata->id;
         try {
             DB::transaction(function () use ($wisata, $client, $url) {
+                foreach ($wisata->images as $data) {
+                    Storage::delete($data->image);
+                }
                 $wisata->delete();
                 $client->delete($url);
                 Storage::delete($wisata->thumbnail);

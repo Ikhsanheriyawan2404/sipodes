@@ -13,7 +13,9 @@ class DesaController extends Controller
 {
     public function index()
     {
-        return response()->json(Desa::with('desa', 'district', 'city')->get(), 200);
+        $desa = Desa::with('desa', 'district', 'city')->first();
+        $desa->logo = $desa->imagePath;
+        return response()->json(new ApiResource(200, true, 'Data Desa', $desa), 200);
     }
 
     public function store(DesaStoreRequest $request)
@@ -39,7 +41,7 @@ class DesaController extends Controller
                 $response = $client->post($url, ['form_params' => $params]);
                 $response = $response->getBody()->getContents();
             });
-            
+
         } catch (\Exception $e) {
             return response()->json(new ApiResource(400, true, $e->getMessage()), 400);
         }

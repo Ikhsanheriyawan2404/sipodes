@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 use Laravolt\Indonesia\Models\City;
 use Laravolt\Indonesia\Models\District;
 use Laravolt\Indonesia\Models\Village;
@@ -15,6 +16,11 @@ class Desa extends Model
     protected $table = 'desa';
     protected $fillable = ['code', 'description', 'district_code', 'city_code', 'url', 'logo'];
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function getImagePathAttribute()
+    {
+        return URL::to('/') . '/storage/' . $this->logo;
+    }
 
     public function desa()
     {

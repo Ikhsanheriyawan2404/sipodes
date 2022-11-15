@@ -18,13 +18,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if ($desa)
                             <tr>
                                 <td>{{ 1 }}</td>
                                 <td>{{ $desa->code }}</td>
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $desa->id }}" id="btnDetails">Edit</a>
-                                </td>
                             </tr>
+                            @else
+                            <tr>
+                                <td colspan="3" class="text-center">Belum Ada Data Desa</td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

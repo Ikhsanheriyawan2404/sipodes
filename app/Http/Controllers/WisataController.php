@@ -58,7 +58,7 @@ class WisataController extends Controller
 
     public function show($id)
     {
-        $wisata = Wisata::find($id);
+        $wisata = Wisata::with('images')->find($id);
         return response()->json($wisata);
     }
 
@@ -89,7 +89,7 @@ class WisataController extends Controller
         if (request('thumbnail')) {
             // Jika ada request maka delete old img
             Storage::delete($wisata->thumbnail);
-            $thumbnail = request()->file('thumbnail')->store('img/thumbnail');
+            $thumbnail = request()->file('thumbnail')->store('img/wisata');
         } else if ($wisata->thumbnail) {
             // jika tidak ada biarkan old thumbnail
             $thumbnail = $wisata->thumbnail;
@@ -148,11 +148,11 @@ class WisataController extends Controller
         $url = env('PARENT_URL') . '/wisata/' . Desa::first()->code . '/' . $wisata->id;
         try {
             DB::transaction(function () use ($wisata, $url, $client) {
-                $wisata->delete();
                 foreach ($wisata->images as $data) {
                     Storage::delete($data->image);
                 }
-                Storage::delete($wisata->image);
+                $wisata->delete();
+                Storage::delete($wisata->thumbnail);
                 $client->delete($url);
             });
         } catch(\Exception $e) {

@@ -14,8 +14,8 @@ class Gambar extends Model
     protected $fillable = ['wisata_id', 'budaya_id', 'produksi_pangan_id', 'umkm_id', 'image', 'alt'];
     protected $hidden = ['created_at', 'updated_at', 'wisata_id', 'budaya_id', 'produksi_pangan_id', 'umkm_id', 'id'];
 
-    public function getImageAttribute($value)
+    public function getImagePathAttribute()
     {
-        return URL::to('/') . '/storage/' . $value;
+        return URL::to('/') . '/storage/' . $this->image;
     }
 }

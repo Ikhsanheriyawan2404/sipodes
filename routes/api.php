@@ -23,9 +23,9 @@ Route::prefix('v1')->group(function () {
     // Authentication
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
-    
+
     Route::middleware('auth:sanctum')->group(function () {
-        
+
         // Store Desa
         Route::get('desa', [DesaController::class, 'index']);
         Route::post('desa', [DesaController::class, 'store']);
@@ -38,6 +38,8 @@ Route::prefix('v1')->group(function () {
 
         // Store Multi Image
         Route::post('wisata/{id}/image', [WisataController::class, 'upload']);
+        Route::delete('wisata/{gambar}/image', [WisataController::class, 'deleteImage']);
+
         Route::post('budaya/{id}/image', [BudayaController::class, 'upload']);
         Route::post('umkm/{id}/image', [UmkmController::class, 'upload']);
         Route::post('produksi-pangan/wisata/{id}/image', [ProduksiPanganController::class, 'upload']);

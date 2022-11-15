@@ -13,6 +13,9 @@ class UmkmController extends Controller
         $umkm =  Umkm::with('images')->get();
         foreach ($umkm as $data) {
             $data->thumbnail = $data->imagePath;
+            foreach($data->images as $item) {
+                $item->image = $item->imagePath;
+            }
         }
         return new ApiResource(200, true, 'List umkm', $umkm);
     }

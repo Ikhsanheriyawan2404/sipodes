@@ -14,6 +14,9 @@ class BudayaController extends Controller
         $budaya =  Budaya::with('images')->get();
         foreach ($budaya as $data) {
             $data->thumbnail = $data->imagePath;
+            foreach($data->images as $item) {
+                $item->image = $item->imagePath;
+            }
         }
         return new ApiResource(200, true, 'List Budaya', $budaya);
     }
