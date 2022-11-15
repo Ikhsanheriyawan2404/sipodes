@@ -18,6 +18,9 @@ class CreateProduksiPanganTable extends Migration
             $table->string('meta_description')->nullable();
             $table->string('meta_keyword')->nullable();
             $table->string('thumbnail');
+            $table->string('name');
+            $table->string('slug');
+            $table->string('location');
             $table->string('contact');
             $table->text('description');
             $table->timestamps();

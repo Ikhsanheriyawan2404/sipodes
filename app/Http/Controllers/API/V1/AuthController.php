@@ -10,36 +10,19 @@ use Illuminate\Support\Facades\{Auth, Hash};
 
 class AuthController extends Controller
 {
-    public function register()
+    public function login()
     {
         $validator = Validator::make(request()->all(),[
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8'
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string'
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors());
+            return response()->json(new ApiResource(401, false, $validator->errors()), 422);
         }
 
-        $user = User::create([
-            'name' => request('name'),
-            'email' => request('email'),
-            'password' => Hash::make(request('password'))
-         ]);
-
-        $token = $user->createToken('token')->plainTextToken;
-        $data = [
-            'token' => $token,
-            'user' => auth()->user(),
-        ];
-        return new ApiResource(true, 'Berhasil daftar.', $data);
-    }
-
-    public function login()
-    {
         if (!auth()->attempt(request()->only('email', 'password'))) {
-            return response()->json(new ApiResource(true, 'Gagal. email/password salah!'), 401);
+            return response()->json(new ApiResource(401, false, 'Gagal. email/password salah!'), 401);
         }
 
         $token = auth()->user()->createToken('auth_token')->plainTextToken;
@@ -49,13 +32,13 @@ class AuthController extends Controller
             'user' => auth()->user(),
         ];
 
-        return new ApiResource(true, 'Berhasil login.', $data);
+        return new ApiResource(200, true, 'Berhasil login.', $data);
     }
 
     public function logout()
     {
         auth()->user()->tokens()->delete();
 
-        return new ApiResource(true, 'Berhasil logout.');
+        return new ApiResource(200, true, 'Berhasil logout.');
     }
 }

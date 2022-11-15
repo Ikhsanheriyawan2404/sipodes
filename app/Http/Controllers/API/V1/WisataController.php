@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
@@ -20,11 +21,14 @@ class WisataController extends Controller
         return new ApiResource(200, true, 'List Wisata', $wisata);
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $wisata = Wisata::find($id);
+        $wisata = Wisata::where('slug', $slug)->first();
+        if (!$wisata) {
+            return new ApiResource(404, true, 'Data tidak ditemukan');
+        }
         $wisata->thumbnail = $wisata->imagePath;
-        return new ApiResource(200, true, 'List Wisata', $wisata);
+        return new ApiResource(200, true, 'Detail Wisata', $wisata);
     }
 
     public function store(WisataStoreRequest $request)
@@ -35,6 +39,7 @@ class WisataController extends Controller
         // Request Body
         $params = [
             'name' => request('name'),
+            'slug' => Str::slug(request('name')),
             'description' => request('description'),
             'location' => request('location'),
             'price' => request('price'),

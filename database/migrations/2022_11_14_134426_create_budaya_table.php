@@ -17,6 +17,9 @@ class CreateBudayaTable extends Migration
             $table->bigIncrements('id');
             $table->string('meta_description')->nullable();
             $table->string('meta_keyword')->nullable();
+            $table->string('name');
+            $table->string('slug');
+            $table->string('location');
             $table->string('thumbnail');
             $table->string('contact');
             $table->text('description');

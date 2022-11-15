@@ -55,7 +55,7 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('Desa') }}</a>
+                                <a class="nav-link" href="{{ route('desa.index') }}">{{ __('Desa') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('wisata.index') }}">{{ __('Wisata') }}</a>

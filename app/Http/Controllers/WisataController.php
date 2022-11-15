@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gambar;
+use Illuminate\Support\Str;
 use App\Models\{Desa, Wisata};
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +29,7 @@ class WisataController extends Controller
 
         $params = [
             'name' => request('name'),
+            'slug' => Str::slug(request('name')),
             'description' => request('description'),
             'location' => request('location'),
             'price' => request('price'),
@@ -147,6 +149,9 @@ class WisataController extends Controller
         try {
             DB::transaction(function () use ($wisata, $url, $client) {
                 $wisata->delete();
+                foreach ($wisata->images as $data) {
+                    Storage::delete($data->image);
+                }
                 Storage::delete($wisata->image);
                 $client->delete($url);
             });

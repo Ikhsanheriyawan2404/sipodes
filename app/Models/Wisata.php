@@ -10,7 +10,7 @@ class Wisata extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'price', 'description', 'latitude', 'longtitude'];
+    protected $fillable = ['name', 'slug', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'price', 'description', 'latitude', 'longtitude'];
     protected $table = 'wisata';
     protected $hidden = ['updated_at'];
     protected $casts = [

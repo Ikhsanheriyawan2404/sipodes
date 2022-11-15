@@ -18,15 +18,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($desa as $data)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $data->code }}</td>
+                                <td>{{ 1 }}</td>
+                                <td>{{ $desa->code }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $data->id }}" id="btnDetails">Edit</a>
+                                    <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $desa->id }}" id="btnDetails">Edit</a>
                                 </td>
                             </tr>
-                            @endforeach
                         </tbody>
                     </table>
                 </div>

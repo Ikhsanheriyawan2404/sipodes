@@ -17,4 +17,14 @@ class BudayaController extends Controller
         }
         return new ApiResource(200, true, 'List Budaya', $budaya);
     }
+
+    public function show($slug)
+    {
+        $budaya = Budaya::where('slug', $slug)->first();
+        if (!$budaya) {
+            return new ApiResource(404, true, 'Data tidak ditemukan');
+        }
+        $budaya->thumbnail = $budaya->imagePath;
+        return new ApiResource(200, true, 'Detail Budaya', $budaya);
+    }
 }
