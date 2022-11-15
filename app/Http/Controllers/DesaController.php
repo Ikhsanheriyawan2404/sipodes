@@ -1,28 +1,40 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers;
 
-use App\Models\Desa;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Laravolt\Indonesia\Models\{Provinsi, City};
-use App\Http\Resources\ApiResource;
 use App\Http\Requests\DesaStoreRequest;
+use Illuminate\Support\Facades\DB;
+use App\Models\Desa;
 
 class DesaController extends Controller
 {
     public function index()
     {
-        return response()->json(Desa::with('desa', 'district', 'city')->get(), 200);
+        return view('desa.index', [
+            'desa' => Desa::first(),
+        ]);
+    }
+    public function create()
+    {
+        $desa = Desa::first();
+        if ($desa) {
+            abort(403, 'Data has ready registered!');
+        }
+        return view('desa.create', [
+            'provinsi' => Provinsi::where('code', '32')->first(),
+            'kota' => City::where('province_code', '32')->get()
+        ]);
     }
 
     public function store(DesaStoreRequest $request)
     {
-        $request->validated();
+        dd(request()->all());
         $desa = Desa::first();
         if ($desa) {
-            return response()->json(new ApiResource(400, true, 'Duplicate Entry'), 400);
+            abort(403, 'Data has ready registered!');
         }
+        $request->validated();
         try {
             DB::transaction(function () {
                 $client = new \GuzzleHttp\Client();
@@ -41,8 +53,8 @@ class DesaController extends Controller
             });
             
         } catch (\Exception $e) {
-            return response()->json(new ApiResource(400, true, $e->getMessage()), 400);
+            return redirect()->back()->with('error', $e->getMessage());
         }
-        return response()->json(new ApiResource(201, true, 'Desa berhasil dimasukkan!'), 201);
+        return redirect()->route('home')->with('success', 'Data desa berhasil dimasukkan!');
     }
 }

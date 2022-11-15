@@ -1,283 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Desa</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-</head>
-<body>
+@extends('layouts.app')
 
-    <div class="container my-3">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Register</h3>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('desa.store') }}" method="post">
-                            @csrf
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input name="email" id="email"
-                                            class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                            value="{{ old('email') }}">
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input name="password" id="password" class="form-control form-control-sm">
-                                    </div>
-                                    @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+        @include('components.alerts')
+            <div class="card">
+                <div class="card-header">{{ __('Tambah village_code') }}</div>
+
+                <div class="card-body">
+                    <form action="{{ route('desa.store') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="url">Url Website <span class="text-danger">*</span></label>
+                                    <input name="url" id="url"
+                                        class="form-control form-control-sm @error('url') is-invalid @enderror"
+                                        value="{{ old('url') }}">
+                                    @error('url')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
-                                    <div class="form-group">
-                                        <label for="password_confirmation">Konfirmasi Password</label>
-                                        <input name="password_confirmation" id="password_confirmation" class="form-control form-control-sm">
-                                        @error('password_confirmation')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">Nama Lengkap</label>
-                                        <input name="name" id="name" class="form-control form-control-sm">
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nik">NIK KTP</label>
-                                        <input name="nik" id="nik" class="form-control form-control-sm">
-                                        @error('nik')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="telepon">Telepon</label>
-                                        <input type="number" name="telepon" id="telepon" class="form-control form-control-sm">
-                                        @error('telepon')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="pekerjaan">Pekerjaan</label>
-                                        <input type="text" name="pekerjaan" id="pekerjaan" class="form-control form-control-sm">
-                                        @error('pekerjaan')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="provinsi">Provinsi <span class="text-danger">*</span></label>
-                                        <select name="provinsi" id="provinsi"
-                                            class="form-control form-control-sm @error('provinsi') is-invalid @enderror">
-                                            <option selected disabled>Pilih Provinsi</option>
-                                            @foreach ($provinsi as $data)
-                                                <option value="{{ $data->code }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @error('provinsi')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                <div class="form-group">
+                                    <label for="logo">logo <span class="text-danger">*</span></label>
+                                    <input type="file" name="logo" id="logo" class="form-control form-control-sm">
+                                    @error('logo')
+                                        <small class="text-danger">
+                                            {{ $message }}
+                                        </small>
                                     @enderror
-                                    <div class="form-group">
-                                        <label for="kota">Kabupaten/Kota <span class="text-danger">*</span></label>
-                                        <select name="kota" id="kota"
-                                            class="form-control form-control-sm @error('kota') is-invalid @enderror">
-                                            <option selected disabled>Pilih Kabuptaen/Kota</option>
-                                        </select>
-                                        @error('kota')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="kecamatan">Kecamatan <span class="text-danger">*</span></label>
-                                        <select name="kecamatan" id="kecamatan"
-                                            class="form-control form-control-sm @error('kecamatan') is-invalid @enderror">
-                                            <option selected disabled>Pilih Kecamatan</option>
-                                        </select>
-                                        @error('kecamatan')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="desa">Desa <span class="text-danger">*</span></label>
-                                        <select name="desa" id="desa"
-                                            class="form-control form-control-sm @error('desa') is-invalid @enderror">
-                                            <option selected disabled>Pilih Desa</option>
-                                        </select>
-                                        @error('desa')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="alamat">Alamat</label>
-                                        <textarea name="alamat" id="alamat" class="form-control form-control-sm"></textarea>
-                                        @error('alamat')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Deskripsi <span class="text-danger">*</span></label>
+                                    <textarea name="description" id="description" class="form-control form-control-sm"></textarea>
+                                    @error('description')
+                                        <small class="text-danger">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-sm btn-primary my-3 float-right">Submit</button>
-                        </form>
-                    </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="provinsi">Provinsi <span class="text-danger">*</span></label>
+                                    <select name="provinsi" id="provinsi"
+                                        class="form-control form-control-sm @error('provinsi') is-invalid @enderror">
+                                        <option value="{{ $provinsi->code }}" selected disabled>{{ $provinsi->name }}</option>
+                                    </select>
+                                </div>
+                                @error('provinsi')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                <div class="form-group">
+                                    <label for="city_code">Kabupaten/Kota <span class="text-danger">*</span></label>
+                                    <select name="city_code" id="city_code"
+                                        class="form-control form-control-sm @error('city_code') is-invalid @enderror">
+                                        <option selected disabled>Pilih Kabuptaen/Kota</option>
+                                        @foreach($kota as $data)
+                                            <option value="{{ $data->code }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('city_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="district_code">Kecamatan <span class="text-danger">*</span></label>
+                                    <select name="district_code" id="district_code"
+                                        class="form-control form-control-sm @error('district_code') is-invalid @enderror">
+                                        <option selected disabled>Pilih Kecamatan</option>
+                                    </select>
+                                    @error('district_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="village_code">Desa <span class="text-danger">*</span></label>
+                                    <select name="village_code" id="village_code"
+                                        class="form-control form-control-sm @error('village_code') is-invalid @enderror">
+                                        <option selected disabled>Pilih Desa</option>
+                                    </select>
+                                    @error('village_code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary my-3 float-right">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+@endsection
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            let provinceId = $('#provinsi').val();
-            let kotaId = $('#kota').val();
-            let kecamatanId = $('#kecamatan').val();
-            $('#provinsi').select2();
-            $('#provinsi').change(function() {
-                $('#kota').empty();
-                $('#kecamatan').empty();
-                $("#desa").empty();
-                let provinceId = $(this).val();
-                if (provinceId) {
-                    $('#kota').select2({
-                        placeholder: 'Pilih Kota/Kabupaten',
-                        allowClear: true,
-                        ajax: {
-                            url: "{{ route('dropdown.kota') }}?provinceId=" + provinceId,
-                            dataType: 'json',
-                            delay: 250,
-                            processResults: function(data) {
-                                console.log(data);
-                                return {
-                                    results: $.map(data, function(item) {
-                                        return {
-                                            text: item.name,
-                                            id: item.code
-                                        }
-                                    })
-                                };
-                            }
+@push('styles')
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+@endpush
+
+@push('scripts')
+
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+<script>
+     ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .then( editor => {
+                console.log( editor );
+        } )
+        .catch( error => {
+                console.error( error );
+        } )
+        ;
+    $(document).ready(function() {
+        let provinceId = $('#provinsi').val();
+        let city_codeId = $('#city_code').val();
+        let district_codeId = $('#district_code').val();
+
+        $('#city_code').select2();
+        $('#city_code').change(function() {
+            $('#district_code').empty();
+            $("#village_code").empty();
+            let city_codeId = $(this).val();
+            if (city_codeId) {
+                $('#district_code').select2({
+                    placeholder: 'Pilih Kecamatan',
+                    allowClear: true,
+                    ajax: {
+                        url: "{{ route('dropdown.district') }}?city_codeId=" + city_codeId,
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function(data) {
+                            console.log(data);
+                            return {
+                                results: $.map(data, function(item) {
+                                    return {
+                                        text: item.name,
+                                        id: item.code
+                                    }
+                                })
+                            };
                         }
-                    });
-                }
-            });
-
-            $('#kota').select2();
-            $('#kota').change(function() {
-                $('#kecamatan').empty();
-                $("#desa").empty();
-                let kotaId = $(this).val();
-                if (kotaId) {
-                    $('#kecamatan').select2({
-                        placeholder: 'Pilih Kecamatan',
-                        allowClear: true,
-                        ajax: {
-                            url: "{{ route('dropdown.kecamatan') }}?kotaId=" + kotaId,
-                            dataType: 'json',
-                            delay: 250,
-                            processResults: function(data) {
-                                console.log(data);
-                                return {
-                                    results: $.map(data, function(item) {
-                                        return {
-                                            text: item.name,
-                                            id: item.code
-                                        }
-                                    })
-                                };
-                            }
-                        }
-                    });
-                } else {
-                    $("#kota").empty();
-                    $('#kecamatan').empty();
-                    $("#desa").empty();
-                }
-            });
-
-            $('#kecamatan').select2();
-            $('#desa').select2();
-            $('#kecamatan').change(function() {
-                $("#desa").empty();
-                let kecamatanId = $(this).val();
-                if (kecamatanId) {
-                    $('#desa').select2({
-                        placeholder: 'Pilih Desa',
-                        allowClear: true,
-                        ajax: {
-                            url: "{{ route('dropdown.desa') }}?kecamatanId=" + kecamatanId,
-                            dataType: 'json',
-                            delay: 250,
-                            processResults: function(data) {
-                                console.log(data);
-                                return {
-                                    results: $.map(data, function(item) {
-                                        return {
-                                            text: item.name,
-                                            id: item.code
-                                        }
-                                    })
-                                };
-                            }
-                        }
-                    });
-                } else {
-                    $('#kecamatan').empty();
-                    $("#desa").empty();
-                }
-            });
-
-            $('#provinsi').on('select2:clear', function(e) {
-                $("#kota").select2();
-                $("#kecamatan").select2();
-                $("#desa").select2();
-            });
-
-            $('#kota').on('select2:clear', function(e) {
-                $("#kecamatan").select2();
-                $("#desa").select2();
-            });
-
-            $('#kecamatan').on('select2:clear', function(e) {
-                $("#desa").select2();
-            });
+                    }
+                });
+            } else {
+                $("#city_code").empty();
+                $('#district_code').empty();
+                $("#village_code").empty();
+            }
         });
-    </script>
-</body>
-</html>
+
+        $('#district_code').select2();
+        $('#village_code').select2();
+        $('#district_code').change(function() {
+            $("#village_code").empty();
+            let district_codeId = $(this).val();
+            if (district_codeId) {
+                $('#village_code').select2({
+                    placeholder: 'Pilih Desa',
+                    allowClear: true,
+                    ajax: {
+                        url: "{{ route('dropdown.village') }}?district_codeId=" + district_codeId,
+                        dataType: 'json',
+                        delay: 250,
+                        processResults: function(data) {
+                            console.log(data);
+                            return {
+                                results: $.map(data, function(item) {
+                                    return {
+                                        text: item.name,
+                                        id: item.code
+                                    }
+                                })
+                            };
+                        }
+                    }
+                });
+            } else {
+                $('#district_code').empty();
+                $("#village_code").empty();
+            }
+        });
+
+        $('#city_code').on('select2:clear', function(e) {
+            $("#district_code").select2();
+            $("#village_code").select2();
+        });
+
+        $('#district_code').on('select2:clear', function(e) {
+            $("#village_code").select2();
+        });
+    });
+</script>
+@endpush
