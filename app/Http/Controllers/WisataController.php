@@ -47,7 +47,7 @@ class WisataController extends Controller
                 $wisata = Wisata::create($params);
                 $params['code_desa'] = Desa::first()->code;
                 $params['wisata_id'] = $wisata->id;
-                $client->post($url, ['form_params' => $params]);
+                $client->post($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'], 'form_params' => $params]);
             });
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -102,7 +102,7 @@ class WisataController extends Controller
                 $params['thumbnail'] = $thumbnail;
                 $wisata->update($params);
                 $params['code_desa'] = Desa::first()->code;
-                $client->put($url, ['form_params' => $params]);
+                $client->put($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
             });
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
@@ -153,7 +153,7 @@ class WisataController extends Controller
                 }
                 $wisata->delete();
                 Storage::delete($wisata->thumbnail);
-                $client->delete($url);
+                $client->delete($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX']]);
             });
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());

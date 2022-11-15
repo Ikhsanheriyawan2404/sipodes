@@ -47,7 +47,7 @@ class DesaController extends Controller
                     'logo' => request()->file('logo')->store('img/desa'),
                 ];
                 $data = Desa::create($params);
-                $response = $client->post($url, ['form_params' => $params]);
+                $response = $client->post($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
                 $response = $response->getBody()->getContents();
             });
 
