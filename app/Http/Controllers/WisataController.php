@@ -94,7 +94,7 @@ class WisataController extends Controller
         }
 
         $client = new \GuzzleHttp\Client();
-        $url = env('PARENT_URL') . '/wisata/' . $wisata->id;
+        $url = env('PARENT_URL') . '/wisata/' . Desa::first()->code . '/' . $wisata->id;
         try {
             DB::transaction(function () use ($params, $url, $client, $thumbnail, $wisata) {
                 $params['thumbnail'] = $thumbnail;
@@ -143,7 +143,7 @@ class WisataController extends Controller
         $wisata = Wisata::find($id);
 
         $client = new \GuzzleHttp\Client();
-        $url = env('PARENT_URL') . '/wisata/' . $wisata->id;
+        $url = env('PARENT_URL') . '/wisata/' . Desa::first()->code . '/' . $wisata->id;
         try {
             DB::transaction(function () use ($wisata, $url, $client) {
                 $wisata->delete();

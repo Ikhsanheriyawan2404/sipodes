@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
 use App\Models\{Desa, Gambar, Wisata};
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\{WisataStoreRequest, WisataUpdateRequest};
 
 class WisataController extends Controller
@@ -23,7 +24,7 @@ class WisataController extends Controller
     {
         $wisata = Wisata::find($id);
         $wisata->thumbnail = $wisata->imagePath;
-        return new ApiResource(200, true, 'List Wisata', $wisata); 
+        return new ApiResource(200, true, 'List Wisata', $wisata);
     }
 
     public function store(WisataStoreRequest $request)

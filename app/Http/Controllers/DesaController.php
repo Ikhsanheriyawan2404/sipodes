@@ -29,7 +29,6 @@ class DesaController extends Controller
 
     public function store(DesaStoreRequest $request)
     {
-        dd(request()->all());
         $desa = Desa::first();
         if ($desa) {
             abort(403, 'Data has ready registered!');
@@ -51,7 +50,7 @@ class DesaController extends Controller
                 $response = $client->post($url, ['form_params' => $params]);
                 $response = $response->getBody()->getContents();
             });
-            
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

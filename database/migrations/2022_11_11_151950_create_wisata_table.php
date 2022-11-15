@@ -17,6 +17,7 @@ class CreateWisataTable extends Migration
             $table->bigIncrements('id');
             $table->string('meta_description')->nullable();
             $table->string('meta_keyword')->nullable();
+            $table->string('name');
             $table->string('thumbnail');
             $table->string('location');
             $table->string('price')->nullable();
