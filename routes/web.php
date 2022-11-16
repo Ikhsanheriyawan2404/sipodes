@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{HomeController, DropdownController, WisataController, DesaController};
+use App\Http\Controllers\{HomeController, UserController, DropdownController, WisataController, DesaController};
 use App\Http\Controllers\Auth\LoginController;
 
 Route::get('city', [DropdownController::class, 'city'])->name('dropdown.city');
@@ -20,9 +20,13 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
 
+    Route::resource('users', UserController::class);
+
     Route::get('desa', [DesaController::class, 'index'])->name('desa.index');
     Route::get('desa/create', [DesaController::class, 'create'])->name('desa.create');
     Route::post('desa', [DesaController::class, 'store'])->name('desa.store');
+    Route::get('desa/edit', [DesaController::class, 'edit'])->name('desa.edit');
+    Route::put('desa/edit', [DesaController::class, 'update'])->name('desa.update');
 
     // Wisata
     Route::resource('wisata', WisataController::class);

@@ -23,7 +23,7 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('plugins') }}/ckeditor/ckeditor.js"></script>
     <script>
         ClassicEditor
         .create( document.querySelector( '#description' ) )

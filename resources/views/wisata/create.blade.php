@@ -22,7 +22,7 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('plugins') }}/select2/dist/js/select2.min.js"></script>
     <script>
         ClassicEditor
         .create( document.querySelector( '#description' ) )
