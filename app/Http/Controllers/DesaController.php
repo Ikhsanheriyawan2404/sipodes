@@ -15,6 +15,7 @@ class DesaController extends Controller
             'desa' => Desa::first(),
         ]);
     }
+
     public function create()
     {
         $desa = Desa::first();
@@ -28,6 +29,43 @@ class DesaController extends Controller
     }
 
     public function store(DesaStoreRequest $request)
+    {
+        $desa = Desa::first();
+        if ($desa) {
+            abort(403, 'Data has ready registered!');
+        }
+        $request->validated();
+        try {
+            DB::transaction(function () {
+                $client = new \GuzzleHttp\Client();
+                $url = env('PARENT_URL') . '/desa';
+                $params = [
+                    'code' => request('village_code'),
+                    'district_code' => request('district_code'),
+                    'city_code' => request('city_code'),
+                    'url' => request('url'),
+                    'description' => request('description'),
+                    'logo' => request()->file('logo')->store('img/desa'),
+                ];
+                $data = Desa::create($params);
+                $response = $client->post($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
+                $response = $response->getBody()->getContents();
+            });
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+        return redirect()->route('home')->with('success', 'Data desa berhasil dimasukkan!');
+    }
+
+    public function edit()
+    {
+        return view('desa.edit', [
+            'desa' => Desa::first(),
+        ]);
+    }
+
+    public function update()
     {
         $desa = Desa::first();
         if ($desa) {

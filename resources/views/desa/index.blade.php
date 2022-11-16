@@ -23,7 +23,7 @@
                                 <td>{{ 1 }}</td>
                                 <td>{{ $desa->code }}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $desa->id }}" id="btnDetails">Edit</a>
+                                    <a class="btn btn-sm btn-primary" href="{{ route('desa.edit) }}">Edit</a>
                             </tr>
                             @else
                             <tr>
