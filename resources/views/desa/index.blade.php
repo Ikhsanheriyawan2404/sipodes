@@ -19,7 +19,11 @@
                                 <td>Code Desa</td>
                                 <td>Nama Desa</td>
                                 <td>Url Website</td>
+                                <td>Kontak</td>
+                                <td>Facebook</td>
+                                <td>Instagram</td>
                                 <td>Logo</td>
+                                <td>Struktur Organisasi</td>
                                 <td>Deskripsi</td>
                                 <td>Action</td>
                             </tr>
@@ -31,7 +35,11 @@
                                 <td>{{ $desa->code }}</td>
                                 <td>{{ $desa->desa->name }}</td>
                                 <td>{{ $desa->url }}</td>
+                                <td>{{ $desa->facebook }}</td>
+                                <td>{{ $desa->instagram }}</td>
+                                <td>{{ $desa->phone_number }}</td>
                                 <td><img src="{{ $desa->imagePath }}" width="200"></td>
+                                <td><img src="{{ $desa->imageStruktur }}" width="200"></td>
                                 <td>{{ $desa->description }}</td>
                                 <td>
                                     <a class="btn btn-sm btn-primary" href="{{ route('desa.edit') }}">Edit</a>

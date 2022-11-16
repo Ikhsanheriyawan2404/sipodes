@@ -25,9 +25,18 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="logo">logo <span class="text-danger">*</span></label>
+                                    <label for="logo">Logo Desa <span class="text-danger">*</span></label>
                                     <input type="file" name="logo" id="logo" class="form-control form-control-sm">
                                     @error('logo')
+                                        <small class="text-danger">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="struktur">Strukur Organisasi <span class="text-danger">*</span></label>
+                                    <input type="file" name="struktur" id="struktur" class="form-control form-control-sm">
+                                    @error('struktur')
                                         <small class="text-danger">
                                             {{ $message }}
                                         </small>
@@ -95,6 +104,39 @@
                                         </span>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="facebook">Facebook <small>(Jika ada)</small></label>
+                                    <input type="text" name="facebook" id="facebook"
+                                        class="form-control form-control-sm @error('facebook') is-invalid @enderror"
+                                        value="{{ old('facebook') }}">
+                                    @error('facebook')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="instagram">Instagram <small>(Jika ada)</small></label>
+                                    <input type="text" name="instagram" id="instagram"
+                                        class="form-control form-control-sm @error('instagram') is-invalid @enderror"
+                                        value="{{ old('instagram') }}">
+                                    @error('instagram')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone_number">Kontak/No HP <small>(Jika ada)</small></label>
+                                    <input type="text" name="phone_number" id="phone_number"
+                                        class="form-control form-control-sm @error('phone_number') is-invalid @enderror"
+                                        value="{{ old('phone_number') }}">
+                                    @error('phone_number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-sm btn-primary my-3 float-right">Submit</button>
@@ -109,7 +151,7 @@
 @push('styles')
 
 <link href="{{ asset('plugins') }}/select2/dist/css/select2.min.css" rel="stylesheet" />
-    
+
 @endpush
 
 @push('scripts')

@@ -34,8 +34,50 @@
                                         </small>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="struktur">Struktur Organisasi <span class="text-danger">*</span></label>
+                                    <input type="file" name="struktur" id="struktur" class="form-control form-control-sm">
+                                    @error('struktur')
+                                        <small class="text-danger">
+                                            {{ $message }}
+                                        </small>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="col-md-6">
+                            <div class="form-group">
+                                    <label for="facebook">Facebook <small>(Jika ada)</small></label>
+                                    <input type="text" name="facebook" id="facebook"
+                                        class="form-control form-control-sm @error('facebook') is-invalid @enderror"
+                                        value="{{ $desa->facebook ?? old('facebook') }}">
+                                    @error('facebook')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="instagram">Instagram <small>(Jika ada)</small></label>
+                                    <input type="text" name="instagram" id="instagram"
+                                        class="form-control form-control-sm @error('instagram') is-invalid @enderror"
+                                        value="{{ $desa->instagram ?? old('instagram') }}">
+                                    @error('instagram')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone_number">Kontak/No HP <small>(Jika ada)</small></label>
+                                    <input type="text" name="phone_number" id="phone_number"
+                                        class="form-control form-control-sm @error('phone_number') is-invalid @enderror"
+                                        value="{{ $desa->phone_number ?? old('phone_number') }}">
+                                    @error('phone_number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                                 <div class="form-group">
                                     <label for="description">Deskripsi <span class="text-danger">*</span></label>
                                     <textarea name="description" id="description" class="form-control form-control-sm">{{ $desa->url ?? old('description') }}</textarea>

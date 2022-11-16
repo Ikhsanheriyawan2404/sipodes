@@ -45,8 +45,12 @@ class DesaController extends Controller
                     'district_code' => request('district_code'),
                     'city_code' => request('city_code'),
                     'url' => request('url'),
+                    'phone_number' => request('phone_number'),
+                    'facebook' => request('facebook'),
+                    'instagram' => request('instagram'),
                     'description' => request('description'),
                     'logo' => request()->file('logo')->store('img/desa'),
+                    'struktur' => request()->file('struktur')->store('img/desa'),
                 ];
                 $data = Desa::create($params);
                 $response = $client->post($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);
@@ -71,25 +75,35 @@ class DesaController extends Controller
         request()->validate([
             'url' => 'required|max:255',
             'logo' => 'image|mimes:jpeg,jpg,png|max:1028',
+            'struktur' => 'image|mimes:jpeg,jpg,png|max:1028',
         ]);
 
         $desa = Desa::first();
         if (request('logo')) {
-            // Jika ada request maka delete old img
             Storage::delete($desa->logo);
             $logo = request()->file('logo')->store('img/desa');
         } else if ($desa->logo) {
-            // jika tidak ada biarkan old logo
             $logo = $desa->logo;
         }
+
+        if (request('struktur')) {
+            Storage::delete($desa->struktur);
+            $struktur = request()->file('struktur')->store('img/desa');
+        } else if ($desa->struktur) {
+            $struktur = $desa->struktur;
+        }
         try {
-            DB::transaction(function () use ($desa, $logo) {
+            DB::transaction(function () use ($desa, $logo, $struktur) {
                 $client = new \GuzzleHttp\Client();
                 $url = env('PARENT_URL') . '/desa/' . $desa->code;
                 $params = [
                     'url' => request('url'),
                     'description' => request('description'),
                     'logo' => $logo,
+                    'struktur' => $struktur,
+                    'phone_number' => request('phone_number'),
+                    'facebook' => request('facebook'),
+                    'instagram' => request('instagram'),
                 ];
                 $desa->update($params);
                 $response = $client->put($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);

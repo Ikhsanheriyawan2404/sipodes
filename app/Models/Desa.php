@@ -22,6 +22,11 @@ class Desa extends Model
         return URL::to('/') . '/storage/' . $this->logo;
     }
 
+    public function getImageStrukutAttribute()
+    {
+        return URL::to('/') . '/storage/' . $this->struktur;
+    }
+
     public function desa()
     {
         return $this->hasOne(Village::class, 'code', 'code');

@@ -29,6 +29,7 @@ class DesaStoreRequest extends FormRequest
             'city_code' => 'required',
             'url' => 'required|max:255',
             'logo' => 'required|image|mimes:jpeg,jpg,png|max:1028',
+            'struktur' => 'required|image|mimes:jpeg,jpg,png|max:1028',
         ];
     }
 }
