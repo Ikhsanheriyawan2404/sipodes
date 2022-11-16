@@ -6,11 +6,12 @@
         <div class="col-md-12">
         @include('components.alerts')
             <div class="card">
-                <div class="card-header">{{ __('Tambah village_code') }}</div>
+                <div class="card-header">{{ __('Tambah Desa') }}</div>
 
                 <div class="card-body">
-                    <form action="{{ route('desa.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('desa.update') }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

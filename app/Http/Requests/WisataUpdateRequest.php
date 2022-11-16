@@ -24,7 +24,7 @@ class WisataUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:wisata,name,' . $this->id,
             'description' => 'required',
             'location' => 'required|max:255',
             'longtitude' => 'required|max:10',

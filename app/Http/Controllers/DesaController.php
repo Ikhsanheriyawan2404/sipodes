@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Laravolt\Indonesia\Models\{Provinsi, City};
-use App\Http\Requests\DesaStoreRequest;
-use Illuminate\Support\Facades\DB;
 use App\Models\Desa;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\DesaStoreRequest;
+use Illuminate\Support\Facades\Storage;
+use Laravolt\Indonesia\Models\{Provinsi, City};
 
 class DesaController extends Controller
 {
@@ -55,7 +56,7 @@ class DesaController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('home')->with('success', 'Data desa berhasil dimasukkan!');
+        return redirect()->route('desa.index')->with('success', 'Data desa berhasil dimasukkan!');
     }
 
     public function edit()
@@ -67,25 +68,31 @@ class DesaController extends Controller
 
     public function update()
     {
+        request()->validate([
+            'url' => 'required|max:255',
+            'logo' => 'image|mimes:jpeg,jpg,png|max:1028',
+        ]);
+
         $desa = Desa::first();
-        if ($desa) {
-            abort(403, 'Data has ready registered!');
+        if (request('logo')) {
+            // Jika ada request maka delete old img
+            Storage::delete($desa->logo);
+            $logo = request()->file('logo')->store('img/desa');
+        } else if ($desa->logo) {
+            // jika tidak ada biarkan old logo
+            $logo = $desa->logo;
         }
-        $request->validated();
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($desa, $logo) {
                 $client = new \GuzzleHttp\Client();
-                $url = env('PARENT_URL') . '/desa';
+                $url = env('PARENT_URL') . '/desa/' . $desa->code;
                 $params = [
-                    'code' => request('village_code'),
-                    'district_code' => request('district_code'),
-                    'city_code' => request('city_code'),
                     'url' => request('url'),
                     'description' => request('description'),
-                    'logo' => request()->file('logo')->store('img/desa'),
+                    'logo' => $logo,
                 ];
-                $data = Desa::create($params);
-                $response = $client->post($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
+                $desa->update($params);
+                $response = $client->put($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
                 $response = $response->getBody()->getContents();
             });
 
