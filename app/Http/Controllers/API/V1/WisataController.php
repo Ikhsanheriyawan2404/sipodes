@@ -63,7 +63,7 @@ class WisataController extends Controller
                 $wisata = Wisata::create($params);
                 $params['code_desa'] = Desa::first()->code;
                 $params['wisata_id'] = $wisata->id;
-                $client->post($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
+                $client->post($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);
             });
         } catch(\Exception $e) {
             return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
@@ -130,7 +130,7 @@ class WisataController extends Controller
                 $wisata->update($params);
                 $params['code_desa'] = Desa::first()->code;
                 $params['wisata_id'] = $wisata->id;
-                $client->put($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
+                $client->put($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);
             });
         } catch(\Exception $e) {
             return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
@@ -154,7 +154,7 @@ class WisataController extends Controller
                     Storage::delete($data->image);
                 }
                 $wisata->delete();
-                $client->delete($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX']]);
+                $client->delete($url, ['headers' => ['X-Authorization' => env('API_KEY')]]);
                 Storage::delete($wisata->thumbnail);
             });
         } catch (\Exception $e) {
