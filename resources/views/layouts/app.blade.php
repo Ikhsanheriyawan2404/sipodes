@@ -72,6 +72,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('galeri.index') }}">{{ __('Galeri') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('slider.index') }}">{{ __('Slider') }}</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

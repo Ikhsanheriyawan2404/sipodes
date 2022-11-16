@@ -9,24 +9,18 @@
                 <div class="card-header">Data Slider </div>
 
                 <div class="card-body table-responsive">
-                    <form action="{{ route('galeri.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('slider.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <div class="row my-3">
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <input type="file" name="image" id="image" class="form-control form-control-sm">
                                 @error('image')
                                     <small class="text-danger">{{$message}}</small>
                                 @enderror
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" name="title" id="title" class="form-control form-control-sm" placeholder="judul gambar">
-                                @error('title')
-                                    <small class="text-danger">{{$message}}</small>
-                                @enderror
-                            </div>
-                            <div class="col-md-3">
-                                <textarea type="text" name="description" id="description" class="form-control form-control-sm" placeholder="deskripsi gambar"></textarea>
-                                @error('description')
+                            <div class="col-md-5">
+                                <input type="text" name="alt" id="alt" class="form-control form-control-sm" placeholder="judul gambar">
+                                @error('alt')
                                     <small class="text-danger">{{$message}}</small>
                                 @enderror
                             </div>
@@ -46,14 +40,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($galeri as $data)
+                            @foreach ($slider as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->title }}</td>
-                                <td>{{ $data->description }}</td>
                                 <td><img src="{{ $data->imagePath }}" alt="{{ $data->alt }}" width="100"></td>
                                 <td>
-                                    <form action="{{ route('galeri.destroy', $data->id) }}" method="post">
+                                    <form action="{{ route('slider.destroy', $data->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger" type="submit">Hapus</button>

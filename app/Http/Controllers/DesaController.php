@@ -19,7 +19,6 @@ class DesaController extends Controller
 
     public function create()
     {
-        $ikshan;
         $desa = Desa::first();
         if ($desa) {
             abort(403, 'Data has ready registered!');

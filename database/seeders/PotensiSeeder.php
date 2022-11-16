@@ -30,6 +30,8 @@ class PotensiSeeder extends Seeder
             'longtitude' => '-6.6897378',
             'latitude' => '108.4127686',
             'price' => 14000,
+            'contact' => "821731313",
+            'schedule' => "Jam08.00-17.00",
             'description' => $faker->paragraph(),
             'thumbnail' => 'img/default',
         ]);
@@ -41,7 +43,8 @@ class PotensiSeeder extends Seeder
             'slug' => Str::slug($name),
             'meta_description' => $faker->sentence,
             'meta_keyword' => $faker->name,
-            'contact' => 'Pak sutisno',
+            'contact' => '6282732832',
+            'figure' => 'Pak sutisno',
             'description' => $faker->paragraph(),
             'thumbnail' => 'img/default',
         ]);

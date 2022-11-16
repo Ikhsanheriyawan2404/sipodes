@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{HomeController, UserController, DropdownController, WisataController, DesaController, GaleriController};
+use App\Http\Controllers\{HomeController, UserController, DropdownController, WisataController, DesaController, GaleriController, SliderController};
 use App\Http\Controllers\Auth\LoginController;
 
 Route::get('city', [DropdownController::class, 'city'])->name('dropdown.city');
@@ -32,6 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::get('galeri', [GaleriController::class, 'index'])->name('galeri.index');
     Route::post('galeri', [GaleriController::class, 'store'])->name('galeri.store');
     Route::delete('galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
+    // Slider
+    Route::get('slider', [SliderController::class, 'index'])->name('slider.index');
+    Route::post('slider', [SliderController::class, 'store'])->name('slider.store');
+    Route::delete('slider/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
+
     // Wisata
     Route::resource('wisata', WisataController::class);
     Route::get('wisata/{wisata}/gambar', [WisataController::class, 'pageUpload'])->name('wisata.gambar');
