@@ -20,6 +20,7 @@ class CreateBudayaTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('location');
+            $table->string('figure');
             $table->string('thumbnail');
             $table->string('contact');
             $table->text('description');
