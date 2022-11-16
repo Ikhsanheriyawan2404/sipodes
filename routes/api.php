@@ -24,10 +24,12 @@ Route::prefix('v1')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
     Route::post('login', [AuthController::class, 'login']);
 
+    // Get Profile Desa
+    Route::get('desa', [DesaController::class, 'index']);
+
     Route::middleware('auth:sanctum')->group(function () {
 
         // Store Desa
-        Route::get('desa', [DesaController::class, 'index']);
         Route::post('desa', [DesaController::class, 'store']);
 
         // Admin Crud Potensi

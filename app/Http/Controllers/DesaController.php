@@ -49,7 +49,7 @@ class DesaController extends Controller
                     'logo' => request()->file('logo')->store('img/desa'),
                 ];
                 $data = Desa::create($params);
-                $response = $client->post($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
+                $response = $client->post($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);
                 $response = $response->getBody()->getContents();
             });
 
@@ -92,7 +92,7 @@ class DesaController extends Controller
                     'logo' => $logo,
                 ];
                 $desa->update($params);
-                $response = $client->put($url, ['headers' => ['X-Authorization' => '4eUUTcAPMbAlgsLSvRovpFBe4u7UAm8HNl69RJ8oiLNuGCRCiOg2DIJqEwMrn2NX'],'form_params' => $params]);
+                $response = $client->put($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);
                 $response = $response->getBody()->getContents();
             });
 
