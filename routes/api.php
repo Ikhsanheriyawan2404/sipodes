@@ -1,12 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\API\V1\{AuthController, DesaController, WisataController, BudayaController, ProduksiPanganController, UmkmController};
+use App\Http\Controllers\API\V1\{AuthController, DesaController, WisataController, BudayaController, GeneralController, ProduksiPanganController, UmkmController, GaleriController, SliderController};
 
 Route::prefix('v1')->group(function () {
 
+    // Authentication
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+
+    // Count All Potensi
+    Route::get('potensi/count', [GeneralController::class, 'count']);
     // Get List Potensi
     Route::get('wisata', [WisataController::class, 'index']);
     Route::get('wisata/{id}', [WisataController::class, 'show']);
@@ -20,9 +24,13 @@ Route::prefix('v1')->group(function () {
     Route::get('produksi-pangan', [ProduksiPanganController::class, 'index']);
     Route::get('produksi-pangan/{id}', [ProduksiPanganController::class, 'show']);
 
-    // Authentication
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('login', [AuthController::class, 'login']);
+    // Galeri & Slider
+    Route::get('galeri', [GaleriController::class, 'index']);
+    Route::post('galeri', [GaleriController::class, 'store']);
+    Route::delete('galeri/{galeri}', [GaleriController::class, 'destroy']);
+    Route::get('slider', [SliderController::class, 'index']);
+    Route::post('slider', [SliderController::class, 'store']);
+    Route::delete('slider/{slider}', [SliderController::class, 'destroy']);
 
     // Get Profile Desa
     Route::get('desa', [DesaController::class, 'index']);
@@ -42,9 +50,14 @@ Route::prefix('v1')->group(function () {
         Route::post('wisata/{id}/image', [WisataController::class, 'upload']);
         Route::delete('wisata/{gambar}/image', [WisataController::class, 'deleteImage']);
 
-        Route::post('budaya/{id}/image', [BudayaController::class, 'upload']);
         Route::post('umkm/{id}/image', [UmkmController::class, 'upload']);
-        Route::post('produksi-pangan/wisata/{id}/image', [ProduksiPanganController::class, 'upload']);
+        Route::delete('umkm/{gambar}/image', [UmkmController::class, 'deleteImage']);
+
+        Route::post('budaya/{id}/image', [BudayaController::class, 'upload']);
+        Route::delete('budaya/{gambar}/image', [BudayaController::class, 'deleteImage']);
+
+        Route::post('produksi-pangan/{id}/image', [ProduksiPanganController::class, 'upload']);
+        Route::delete('produksi-pangan/{gambar}/image', [ProduksiPanganController::class, 'deleteImage']);
 
         // Logout
         Route::post('logout', [AuthController::class, 'logout']);

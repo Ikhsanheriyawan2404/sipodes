@@ -12,6 +12,7 @@ class Galeri extends Model
 
     protected $fillable = ['image', 'title', 'description'];
     protected $table = 'galeri';
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function getImagePathAttribute()
     {

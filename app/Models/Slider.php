@@ -11,6 +11,7 @@ class Slider extends Model
     use HasFactory;
 
     protected $fillable = ['image', 'alt'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function getImagePathAttribute()
     {

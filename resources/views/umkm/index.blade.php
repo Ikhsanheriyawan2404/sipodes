@@ -4,37 +4,35 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h1>BUDAYA</h1>
-            <a href="{{ route('budaya.create') }}" class="btn btn-sm btn-primary my-3">Tambah</a>
+            <h1>UMKM</h1>
+            <a href="{{ route('umkm.create') }}" class="btn btn-sm btn-primary my-3">Tambah</a>
             @include('components.alerts')
             <div class="card">
-                <div class="card-header">{{ __('Data Budaya') }}</div>
+                <div class="card-header">{{ __('Data umkm') }}</div>
 
                 <div class="card-body table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <td>No</td>
-                                <td>Nama budaya</td>
+                                <td>Nama Umkm</td>
                                 <td>Lokasi</td>
-                                <td>Tokoh</td>
                                 <td>Kontak</td>
                                 <td>Action</td>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($budaya as $data)
+                            @foreach ($umkm as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->location }}</td>
-                                <td>{{ $data->figure }}</td>
                                 <td>{{ $data->contact }}</td>
                                 <td>
-                                    <form action="{{ route('budaya.destroy', $data->id) }}" method="post">
+                                    <form action="{{ route('umkm.destroy', $data->id) }}" method="post">
                                     <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $data->id }}" id="btnDetails">Detail</a>
-                                    <a class="btn btn-sm btn-primary" href="{{ route('budaya.gambar', $data->id) }}">Tambah Gambar</a>
-                                    <a class="btn btn-sm btn-success" href="{{ route('budaya.edit', $data->id) }}">Edit</a>
+                                    <a class="btn btn-sm btn-primary" href="{{ route('umkm.gambar', $data->id) }}">Tambah Gambar</a>
+                                    <a class="btn btn-sm btn-success" href="{{ route('umkm.edit', $data->id) }}">Edit</a>
                                     @csrf
                                     @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
@@ -51,12 +49,12 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" style="display: none;"id="kontol"
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" style="display: none;"
 aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailsModal">Budaya Detail</h5>
+                <h5 class="modal-title" id="detailsModal">Umkm Detail</h5>
                 <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -85,13 +83,12 @@ aria-hidden="true">
     <script>
         $(function () {
             $('body').on('click', '#btnDetails', function () {
-                var budaya_id = $(this).data('id');
-                $.get("{{ route('budaya.index') }}" + '/' + budaya_id, function(data) {
+                var umkm_id = $(this).data('id');
+                $.get("{{ route('umkm.index') }}" + '/' + umkm_id, function(data) {
                     $('#detailsModal').modal('show');
-                    $('#budaya_id').val(data.id);
+                    $('#umkm_id').val(data.id);
                     $('#name').html(data.name);
                     $('#location').html(data.location);
-                    $('#figure').html(data.figure);
                     $('#contact').html(data.contact);
                     $('#description').html(data.description);
                     $('#createdAt').html(data.created_at);
