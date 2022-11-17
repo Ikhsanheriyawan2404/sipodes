@@ -4,13 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <a href="{{ route('produksi-pangan.index') }}" class="btn btn-sm btn-primary my-3">Kembali</a>
+            <a href="{{ route('umkm.index') }}" class="btn btn-sm btn-primary my-3">Kembali</a>
             @include('components.alerts')
             <div class="card">
-                <div class="card-header">Data Gambar {{ $produksiPangan->name }}</div>
+                <div class="card-header">Data Gambar {{ $umkm->name }}</div>
 
                 <div class="card-body table-responsive">
-                    <form action="{{ route('produksi-pangan.upload', $produksiPangan->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('umkm.upload', $umkm->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <div class="row my-3">
                             <div class="col-md-5">
@@ -37,13 +37,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($produksiPangan->images as $data)
+                            @foreach ($umkm->images as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->alt }}</td>
                                 <td><img src="{{ $data->imagePath }}" alt="{{ $data->alt }}" width="100"></td>
                                 <td>
-                                    <form action="{{ route('produksi-pangan.deleteImage', $data->id) }}" method="post">
+                                    <form action="{{ route('umkm.deleteImage', $data->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-sm btn-danger" type="submit">Hapus</button>

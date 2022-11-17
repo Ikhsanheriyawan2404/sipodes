@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            <h1>WISATA</h1>
             <a href="{{ route('wisata.create') }}" class="btn btn-sm btn-primary my-3">Tambah</a>
             @include('components.alerts')
             <div class="card">

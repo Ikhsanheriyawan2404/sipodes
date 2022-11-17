@@ -34,6 +34,6 @@ class CreateUmkmTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('umkms');
+        Schema::dropIfExists('umkm');
     }
 }

@@ -10,7 +10,7 @@ class ProduksiPangan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'meta_description', 'meta_keyword', 'thumbnail', 'description'];
+    protected $fillable = ['name', 'slug', 'meta_description', 'meta_keyword', 'thumbnail', 'description', 'location', 'contact'];
     protected $table = 'produksi_pangan';
     protected $hidden = ['updated_at'];
     protected $casts = [

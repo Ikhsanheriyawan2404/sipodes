@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\{HomeController,BudayaController, UserController, DropdownController, WisataController, DesaController, GaleriController, SliderController};
+use App\Http\Controllers\{HomeController,BudayaController, UserController, DropdownController, WisataController, DesaController, GaleriController, SliderController, UmkmController, ProduksiPanganController};
 
 Route::get('city', [DropdownController::class, 'city'])->name('dropdown.city');
 Route::get('district', [DropdownController::class, 'district'])->name('dropdown.district');
@@ -48,6 +48,18 @@ Route::middleware('auth')->group(function () {
     Route::get('budaya/{budaya}/gambar', [BudayaController::class, 'pageUpload'])->name('budaya.gambar');
     Route::post('budaya/{budaya}/gambar', [BudayaController::class, 'upload'])->name('budaya.upload');
     Route::delete('budaya/{gambar}/gambar', [BudayaController::class, 'deleteImage'])->name('budaya.deleteImage');
+
+    // Umkm
+    Route::resource('umkm', UmkmController::class);
+    Route::get('umkm/{umkm}/gambar', [UmkmController::class, 'pageUpload'])->name('umkm.gambar');
+    Route::post('umkm/{umkm}/gambar', [UmkmController::class, 'upload'])->name('umkm.upload');
+    Route::delete('umkm/{gambar}/gambar', [UmkmController::class, 'deleteImage'])->name('umkm.deleteImage');
+
+    // Produksi Pangan
+    Route::resource('produksi-pangan', ProduksiPanganController::class);
+    Route::get('produksi-pangan/{produksi_pangan}/gambar', [ProduksiPanganController::class, 'pageUpload'])->name('produksi-pangan.gambar');
+    Route::post('produksi-pangan/{produksi_pangan}/gambar', [ProduksiPanganController::class, 'upload'])->name('produksi-pangan.upload');
+    Route::delete('produksi-pangan/{gambar}/gambar', [ProduksiPanganController::class, 'deleteImage'])->name('produksi-pangan.deleteImage');
 });
 
 

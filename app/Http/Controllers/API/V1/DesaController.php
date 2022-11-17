@@ -15,6 +15,9 @@ class DesaController extends Controller
     public function index()
     {
         $desa = Desa::with('desa', 'district', 'city')->first();
+        if (!$desa) {
+            return response()->json(new ApiResource(404, true, 'Belum ada data desa'), 404);
+        }
         $desa->logo = $desa->imagePath;
         return response()->json(new ApiResource(200, true, 'Data Desa', $desa), 200);
     }

@@ -4,15 +4,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <a href="{{ route('produksi-pangan.index', []) }}" class="btn btn-sm btn-primary my-3">Kembali</a>
+            <a href="{{ route('umkm.index', []) }}" class="btn btn-sm btn-primary my-3">Kembali</a>
             @include('components.alerts')
             <div class="card">
-                <div class="card-header">{{ __('Data Produksi Pangan') }}</div>
+                <div class="card-header">{{ __('Edit Data umkm') }}</div>
 
                 <div class="card-body table-responsive">
-                    <form action="{{ route('produksi-pangan.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('umkm.update', $umkm->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @include('pangan.form-control.partials')
+                        @method('PUT')
+                        <input type="hidden" value="{{ $umkm->id }}">
+                        @include('umkm.form-control.partials')
                     </form>
                 </div>
             </div>
@@ -35,4 +37,3 @@
         ;
     </script>
 @endpush
-

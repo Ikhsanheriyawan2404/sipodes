@@ -64,10 +64,10 @@
                                 <a class="nav-link" href="{{ route('budaya.index') }}">{{ __('Budaya') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('UMKM') }}</a>
+                                <a class="nav-link" href="{{ route('umkm.index') }}">{{ __('UMKM') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('Produksi Pangan') }}</a>
+                                <a class="nav-link" href="{{ route('produksi-pangan.index') }}">{{ __('Produksi Pangan') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('galeri.index') }}">{{ __('Galeri') }}</a>

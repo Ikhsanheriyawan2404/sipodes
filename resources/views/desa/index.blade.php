@@ -8,6 +8,7 @@
             @if (!$desa)
             <a href="{{ route('desa.create', []) }}" class="btn btn-sm btn-primary my-3">Tambah Desa</a>
             @endif
+            <h1>DESA</h1>
             <div class="card">
                 <div class="card-header">{{ __('Data Desa') }}</div>
 
