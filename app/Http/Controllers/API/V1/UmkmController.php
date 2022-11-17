@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\API\V1;
 
+use App\Models\Desa;
 use App\Models\Umkm;
+use App\Models\Gambar;
+use Illuminate\Support\Env;
 use Illuminate\Support\Str;
+
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UmkmStoreRequest;
-
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UmkmUpdateRequest;
 use function PHPSTORM_META\registerArgumentsSet;
 
 class UmkmController extends Controller
@@ -68,5 +74,97 @@ class UmkmController extends Controller
         }
 
         return response()->json(new ApiResource(201, true, 'Data Umkm Berhasil Dibuat'), 201);
+    }
+
+    public function upload($id)
+    {
+        request()->validate([
+            'image'=> 'required'
+        ]);
+
+        $umkm = Umkm::find($id);
+        if(!$umkm){
+            return new ApiResource(404, true, 'Data tidak ditemukan');
+        }
+        Gambar::create([
+            'umkm_id' => $umkm->id,
+            'image' => request()->file('image')->store('img/umkm'),
+            'alt' => request('alt')
+        ]);
+        return response()->json(new ApiResource(200, true, 'Data Gambar Umkm Berhasil Ditambahkan'), 200);
+    }
+
+    public function deleteImage(Gambar $gambar)
+    {
+        $gambar->delete();
+        Storage::delete($gambar->image);
+        return response()->json(new ApiResource(200, true,'Data Gambar Umkm Berhasil Dihapus'), 200);
+    }
+
+    public function update(UmkmUpdateRequest $request, $id)
+    {
+        $request->validated();
+        $umkm = Umkm::find($id);
+        if(!$umkm){
+            return new ApiResource(404, true, 'Data tidak ditemukan');
+        }
+        $params = [
+            'name' => request('name'),
+            'location'=> request('location'),
+            'contact'=> request('contact'),
+            'description' => request('description'),
+            'meta_description' => request('meta_description'),
+            'meta_keyword' => request('meta_keyword'),
+        ];
+
+        if(request('thumbnail'))
+        {
+            Storage::delete($umkm->thumbnail);
+            $thumbnail = request()->file('thumbnail')->store('img/umkm');
+        } else if ($umkm->thumbnail) {
+            $thumbnail = $umkm->thumbnail;
+        }
+
+        $client = new \GuzzleHttp\Client();
+        $url = env ('PARENT_URL') . '/umkm/' . Desa::first()->code . '/' . $thumbnail->id;
+
+        try {
+            DB::transaction(function () use ($params, $client, $url, $thumbnail, $umkm) {
+                $params['thumbnail'] = $thumbnail;
+                $umkm->update($params);
+                $params['code_desa'] = Desa::first()->code;
+                $params['umkm_id'] = $umkm->id;
+                $client->put($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);
+            });
+        } catch (\Exception $e) {
+            return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
+        }
+        return response()->json(new ApiResource(200,true, 'Data Umkm Berhasil Diupdate'), 200);
+    }
+
+    public function destroy($id)
+    {
+        $umkm = Umkm::find($id);
+        if(!$umkm) {
+            return response()->json(new ApiResource(404, false, 'Data Umkm Tidak Ditemukan'), 404);
+        }
+
+        $client = new \GuzzleHttp\Client();
+        $url = env('PARENT_URL') . '/umkm/' . Desa::first()->code . '/' . $umkm->id;
+
+        try{
+            DB::transaction(function () use ($umkm, $client, $url) {
+                foreach ($umkm->images as $data){
+                    Storage::delete($data->image);
+                }
+
+                $umkm->delete();
+                $client->delete($url, ['headers' => ['X-Authorization' => env('API_KEY')]]);
+                Storage::delete($umkm->thumbnail);
+            });
+        } catch (\Exception $e) {
+            return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
+        }
+        return response()->json(new ApiResource(200, true, 'Data Umkm Berhasil Dihapus'), 200);
     }
 }

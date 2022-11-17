@@ -86,7 +86,7 @@ class WisataController extends Controller
             'image' => request()->file('image')->store('img/wisata'),
             'alt' => request('alt'),
         ]);
-        return response()->json(new ApiResource(200, true, 'Data Gambar Wisata Berhasil Dimasukkan'), 200);
+        return response()->json(new ApiResource(200, true, 'Data Gambar Wisata Berhasil Ditambahkan'), 200);
     }
 
     public function deleteImage(Gambar $gambar)
