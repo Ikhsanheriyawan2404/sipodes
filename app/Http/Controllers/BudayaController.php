@@ -2,28 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gambar;
 use Illuminate\Support\Str;
-use App\Models\{Desa, Wisata};
 use Illuminate\Support\Facades\DB;
+use App\Models\{Desa, Budaya, Gambar};
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\{WisataStoreRequest, WisataUpdateRequest};
+use App\Http\Requests\{BudayaStoreRequest, BudayaUpdateRequest};
 
-class WisataController extends Controller
+class BudayaController extends Controller
 {
     public function index()
     {
-        return view('wisata.index', [
-            'wisata' =>  Wisata::with('images')->get(),
+        return view('budaya.index', [
+            'budaya' =>  Budaya::with('images')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('wisata.create');
+        return view('budaya.create');
     }
 
-    public function store(WisataStoreRequest $request)
+    public function show($id)
+    {
+        $wisata = Budaya::with('images')->find($id);
+        return response()->json($wisata);
+    }
+
+    public function edit($id)
+    {
+        $budaya = Budaya::find($id);
+        return view('budaya.edit', [
+            'budaya' => $budaya,
+        ]);
+    }
+
+    public function store(BudayaStoreRequest $request)
     {
         $request->validated();
 
@@ -32,49 +45,32 @@ class WisataController extends Controller
             'slug' => Str::slug(request('name')),
             'description' => request('description'),
             'location' => request('location'),
-            'price' => request('price'),
+            'figure' => request('figure'),
             'contact' => request('contact'),
-            'schedule' => request('schedule'),
-            'longtitude' => request('longtitude'),
-            'latitude' => request('latitude'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
         ];
 
         $client = new \GuzzleHttp\Client();
-        $url = env('PARENT_URL') . '/wisata';
+        $url = env('PARENT_URL') . '/budaya';
         try {
             DB::transaction(function () use ($params, $url, $client) {
-                $params['thumbnail'] = request()->file('thumbnail')->store('img/wisata');
-                $wisata = Wisata::create($params);
+                $params['thumbnail'] = request()->file('thumbnail')->store('img/budaya');
+                $budaya = Budaya::create($params);
                 $params['code_desa'] = Desa::first()->code;
-                $params['wisata_id'] = $wisata->id;
+                $params['budaya_id'] = $budaya->id;
                 $client->post($url, ['headers' => ['X-Authorization' => env('API_KEY')], 'form_params' => $params]);
             });
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('wisata.index')->with('success', 'Data wisata berhasil dimasukkan!');
+        return redirect()->route('budaya.index')->with('success', 'Data budaya berhasil dimasukkan!');
     }
 
-    public function show($id)
+    public function update(BudayaUpdateRequest $request, $id)
     {
-        $wisata = Wisata::with('images')->find($id);
-        return response()->json($wisata);
-    }
-
-    public function edit($id)
-    {
-        $wisata = Wisata::find($id);
-        return view('wisata.edit', [
-            'wisata' => $wisata,
-        ]);
-    }
-
-    public function update(WisataUpdateRequest $request, $id)
-    {
-        $wisata = Wisata::find($id);
+        $budaya = Budaya::find($id);
         $request->validated();
 
         $params = [
@@ -82,29 +78,27 @@ class WisataController extends Controller
             'description' => request('description'),
             'location' => request('location'),
             'price' => request('price'),
+            'figure' => request('figure'),
             'contact' => request('contact'),
-            'schedule' => request('schedule'),
-            'longtitude' => request('longtitude'),
-            'latitude' => request('latitude'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
         ];
 
         if (request('thumbnail')) {
             // Jika ada request maka delete old img
-            Storage::delete($wisata->thumbnail);
-            $thumbnail = request()->file('thumbnail')->store('img/wisata');
-        } else if ($wisata->thumbnail) {
+            Storage::delete($budaya->thumbnail);
+            $thumbnail = request()->file('thumbnail')->store('img/budaya');
+        } else if ($budaya->thumbnail) {
             // jika tidak ada biarkan old thumbnail
-            $thumbnail = $wisata->thumbnail;
+            $thumbnail = $budaya->thumbnail;
         }
 
         $client = new \GuzzleHttp\Client();
-        $url = env('PARENT_URL') . '/wisata/' . Desa::first()->code . '/' . $wisata->id;
+        $url = env('PARENT_URL') . '/budaya/' . Desa::first()->code . '/' . $budaya->id;
         try {
-            DB::transaction(function () use ($params, $url, $client, $thumbnail, $wisata) {
+            DB::transaction(function () use ($params, $url, $client, $thumbnail, $budaya) {
                 $params['thumbnail'] = $thumbnail;
-                $wisata->update($params);
+                $budaya->update($params);
                 $params['code_desa'] = Desa::first()->code;
                 $client->put($url, ['headers' => ['X-Authorization' => env('API_KEY')],'form_params' => $params]);
             });
@@ -112,26 +106,26 @@ class WisataController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('wisata.index')->with('success', 'Data wisata berhasil dimasukkan!');
+        return redirect()->route('budaya.index')->with('success', 'Data budaya berhasil dimasukkan!');
     }
 
     public function pageUpload($id)
     {
-        $wisata = Wisata::find($id);
-        return view('wisata.upload', [
-            'wisata' => $wisata,
+        $budaya = Budaya::find($id);
+        return view('budaya.upload', [
+            'budaya' => $budaya,
         ]);
     }
 
     public function upload($id)
     {
-        $wisata = Wisata::find($id);
+        $budaya = Budaya::find($id);
         request()->validate([
             'image' => 'required'
         ]);
         Gambar::create([
-            'wisata_id' => $wisata->id,
-            'image' => request()->file('image')->store('img/wisata'),
+            'budaya_id' => $budaya->id,
+            'image' => request()->file('image')->store('img/budaya'),
             'alt' => request('alt'),
         ]);
         return redirect()->back()->with('success', 'Gambar baru berhasil ditambahkan');
@@ -146,22 +140,22 @@ class WisataController extends Controller
 
     public function destroy($id)
     {
-        $wisata = Wisata::find($id);
+        $budaya = Budaya::find($id);
 
         $client = new \GuzzleHttp\Client();
-        $url = env('PARENT_URL') . '/wisata/' . Desa::first()->code . '/' . $wisata->id;
+        $url = env('PARENT_URL') . '/budaya/' . Desa::first()->code . '/' . $budaya->id;
         try {
-            DB::transaction(function () use ($wisata, $url, $client) {
-                foreach ($wisata->images as $data) {
+            DB::transaction(function () use ($budaya, $url, $client) {
+                foreach ($budaya->images as $data) {
                     Storage::delete($data->image);
                 }
-                $wisata->delete();
-                Storage::delete($wisata->thumbnail);
+                $budaya->delete();
+                Storage::delete($budaya->thumbnail);
                 $client->delete($url, ['headers' => ['X-Authorization' => env('API_KEY')]]);
             });
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Data wisata berhasil dihapus');
+        return redirect()->back()->with('success', 'Data buday$budaya berhasil dihapus');
     }
 }

@@ -25,8 +25,8 @@ class CreateWisataTable extends Migration
             $table->string('schedule');
             $table->string('price')->nullable();
             $table->text('description');
-            $table->float('latitude',10,7);
-            $table->float('longtitude',10,7);
+            $table->float('latitude',15,10);
+            $table->float('longtitude',15,10);
             $table->timestamps();
         });
     }

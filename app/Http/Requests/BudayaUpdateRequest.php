@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BudayaUpdateRequest extends FormRequest
@@ -24,10 +25,10 @@ class BudayaUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255|unique:budaya,name' . $this->id,
+            'name' => 'required|max:255|unique:budaya,name,' . $this->budaya,
             'location' => 'required|max:255',
             'figure' => 'required|max:255',
-            'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2058',
+            'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
             'description' => 'required',
         ];

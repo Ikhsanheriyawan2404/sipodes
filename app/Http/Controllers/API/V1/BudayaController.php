@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\V1;
 use App\Models\Budaya;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class BudayaController extends Controller
 {

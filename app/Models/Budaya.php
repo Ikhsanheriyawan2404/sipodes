@@ -10,7 +10,7 @@ class Budaya extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'description'];
+    protected $fillable = ['name', 'figure', 'contact', 'slug', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'description'];
     protected $table = 'budaya';
     protected $hidden = ['updated_at'];
     protected $casts = [

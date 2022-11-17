@@ -4,38 +4,36 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <a href="{{ route('wisata.create') }}" class="btn btn-sm btn-primary my-3">Tambah</a>
+            <a href="{{ route('budaya.create') }}" class="btn btn-sm btn-primary my-3">Tambah</a>
             @include('components.alerts')
             <div class="card">
-                <div class="card-header">{{ __('Data Wisata') }}</div>
+                <div class="card-header">{{ __('Data Budaya') }}</div>
 
                 <div class="card-body table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <td>No</td>
-                                <td>Nama Wisata</td>
+                                <td>Nama budaya</td>
                                 <td>Lokasi</td>
-                                <td>Harga Tiket</td>
-                                <td>Latitude</td>
-                                <td>Longtitude</td>
+                                <td>Tokoh</td>
+                                <td>Kontak</td>
                                 <td>Action</td>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($wisata as $data)
+                            @foreach ($budaya as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->location }}</td>
-                                <td>{{ $data->price }}</td>
-                                <td>{{ $data->latitude }}</td>
-                                <td>{{ $data->longtitude }}</td>
+                                <td>{{ $data->figure }}</td>
+                                <td>{{ $data->contact }}</td>
                                 <td>
-                                    <form action="{{ route('wisata.destroy', $data->id) }}" method="post">
+                                    <form action="{{ route('budaya.destroy', $data->id) }}" method="post">
                                     <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $data->id }}" id="btnDetails">Detail</a>
-                                    <a class="btn btn-sm btn-primary" href="{{ route('wisata.gambar', $data->id) }}">Tambah Gambar</a>
-                                    <a class="btn btn-sm btn-success" href="{{ route('wisata.edit', $data->id) }}">Edit</a>
+                                    <a class="btn btn-sm btn-primary" href="{{ route('budaya.gambar', $data->id) }}">Tambah Gambar</a>
+                                    <a class="btn btn-sm btn-success" href="{{ route('budaya.edit', $data->id) }}">Edit</a>
                                     @csrf
                                     @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
@@ -52,12 +50,12 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" style="display: none;"
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" style="display: none;"id="kontol"
 aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailsModal">Wisata Detail</h5>
+                <h5 class="modal-title" id="detailsModal">Budaya Detail</h5>
                 <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -66,9 +64,8 @@ aria-hidden="true">
                 <ul class="list-group">
                     <button class="list-group-item-action list-group-item">Nama : <i id="name"></i></button>
                     <button class="list-group-item-action list-group-item">Lokasi : <i id="location"></i></button>
-                    <button class="list-group-item-action list-group-item">Harga Tiket : <i id="price"></i></button>
-                    <button class="list-group-item-action list-group-item">Latitude : <i id="latitude"></i></button>
-                    <button class="list-group-item-action list-group-item">Longtitude : <i id="longtitude"></i></button>
+                    <button class="list-group-item-action list-group-item">Figure : <i id="figure"></i></button>
+                    <button class="list-group-item-action list-group-item">Contact : <i id="contact"></i></button>
                     <button class="list-group-item-action list-group-item"><img id="thumbnail" width="200"></button>
                     <button class="list-group-item-action list-group-item"><i id="description"></i></button>
                     <button class="list-group-item-action list-group-item">Dibuat : <i id="createdAt"></i></button>
@@ -87,15 +84,14 @@ aria-hidden="true">
     <script>
         $(function () {
             $('body').on('click', '#btnDetails', function () {
-                var wisata_id = $(this).data('id');
-                $.get("{{ route('wisata.index') }}" + '/' + wisata_id, function(data) {
+                var budaya_id = $(this).data('id');
+                $.get("{{ route('budaya.index') }}" + '/' + budaya_id, function(data) {
                     $('#detailsModal').modal('show');
-                    $('#wisata_id').val(data.id);
+                    $('#budaya_id').val(data.id);
                     $('#name').html(data.name);
                     $('#location').html(data.location);
-                    $('#price').html(data.price);
-                    $('#latitude').html(data.latitude);
-                    $('#longtitude').html(data.longtitude);
+                    $('#figure').html(data.figure);
+                    $('#contact').html(data.contact);
                     $('#description').html(data.description);
                     $('#createdAt').html(data.created_at);
                     $('#thumbnail').attr('src', '/storage/' + data.thumbnail);

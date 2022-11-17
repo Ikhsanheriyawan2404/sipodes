@@ -40,6 +40,25 @@
             @enderror
         </div>
         <div class="form-group">
+            <label for="contact">Kontak <span class="text-danger">*</span></label>
+            <input type="text" name="contact" id="contact" class="form-control form-control-sm" value="{{ $wisata->contact ?? old('contact') }}">
+            @error('contact')
+                <small class="text-danger">
+                    {{ $message }}
+                </small>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="schedule">Jadwal <span class="text-danger">*</span></label>
+            <input type="text" name="schedule" id="schedule" class="form-control form-control-sm" value="{{ $wisata->schedule ?? old('schedule') }}"
+            placeholder="Buka: 08.00 Tutup: 17.00">
+            @error('schedule')
+                <small class="text-danger">
+                    {{ $message }}
+                </small>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="price">Harga <span class="text-danger">*</span></label>
             <input type="number" name="price" id="price" class="form-control form-control-sm" value="{{ $wisata->price ?? old('price') }}">
             @error('price')

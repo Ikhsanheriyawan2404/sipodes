@@ -4,15 +4,15 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <a href="{{ route('wisata.index', []) }}" class="btn btn-sm btn-primary my-3">Kembali</a>
+            <a href="{{ route('budaya.index', []) }}" class="btn btn-sm btn-primary my-3">Kembali</a>
             @include('components.alerts')
             <div class="card">
-                <div class="card-header">{{ __('Data Wisata') }}</div>
+                <div class="card-header">{{ __('Data Budaya') }}</div>
 
                 <div class="card-body table-responsive">
-                    <form action="{{ route('wisata.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('budaya.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @include('wisata.form-control.partials')
+                        @include('budaya.form-control.partials')
                     </form>
                 </div>
             </div>
