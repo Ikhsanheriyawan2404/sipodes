@@ -46,7 +46,7 @@
                             </tr>
                             @else
                             <tr>
-                                <td colspan="7" class="text-center">Belum Ada Data Desa</td>
+                                <td colspan="11" class="text-center">Belum Ada Data Desa</td>
                             </tr>
                             @endif
                         </tbody>
