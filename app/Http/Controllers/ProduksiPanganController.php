@@ -12,14 +12,14 @@ class ProduksiPanganController extends Controller
 {
     public function index()
     {
-        return view('produksi-pangan.index', [
+        return view('pangan.index', [
             'produksi-pangan' =>  ProduksiPangan::with('images')->get(),
         ]);
     }
 
     public function create()
     {
-        return view('produksi-pangan.create');
+        return view('pangan.create');
     }
 
     public function show($id)
@@ -31,7 +31,7 @@ class ProduksiPanganController extends Controller
     public function edit($id)
     {
         $produksiPangan = ProduksiPangan::find($id);
-        return view('produksi-pangan.edit', [
+        return view('pangan.edit', [
             'produksi-pangan' => $produksiPangan,
         ]);
     }
@@ -64,7 +64,7 @@ class ProduksiPanganController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('produksi-pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
+        return redirect()->route('pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
     }
 
     public function update(PanganUpdateRequest $request, $id)
@@ -103,13 +103,13 @@ class ProduksiPanganController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('produksi-pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
+        return redirect()->route('pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
     }
 
     public function pageUpload($id)
     {
         $produksiPangan = ProduksiPangan::find($id);
-        return view('produksi-pangan.upload', [
+        return view('pangan.upload', [
             'produksi-pangan' => $produksiPangan,
         ]);
     }

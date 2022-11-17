@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::post('umkm/{umkm}/gambar', [UmkmController::class, 'upload'])->name('umkm.upload');
     Route::delete('umkm/{gambar}/gambar', [UmkmController::class, 'deleteImage'])->name('umkm.deleteImage');
 
-    // Umkm
+    // Produksi Pangan
     Route::resource('produksi-pangan', ProduksiPanganController::class);
     Route::get('produksi-pangan/{produksi-pangan}/gambar', [ProduksiPanganController::class, 'pageUpload'])->name('produksi-pangan.gambar');
     Route::post('produksi-pangan/{produksi-pangan}/gambar', [ProduksiPanganController::class, 'upload'])->name('produksi-pangan.upload');
