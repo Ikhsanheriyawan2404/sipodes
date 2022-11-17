@@ -24,8 +24,8 @@ class BudayaController extends Controller
 
     public function show($id)
     {
-        $wisata = Budaya::with('images')->find($id);
-        return response()->json($wisata);
+        $budaya = Budaya::with('images')->find($id);
+        return response()->json($budaya);
     }
 
     public function edit($id)
@@ -156,6 +156,6 @@ class BudayaController extends Controller
         } catch(\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->back()->with('success', 'Data buday$budaya berhasil dihapus');
+        return redirect()->back()->with('success', 'Data budaya berhasil dihapus');
     }
 }
