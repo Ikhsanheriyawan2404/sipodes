@@ -39,6 +39,6 @@ class AuthController extends Controller
     {
         auth()->user()->tokens()->delete();
 
-        return new ApiResource(200, true, 'Berhasil logout.');
+        return new ApiResource(200, true, 'Berhasil logout.', null);
     }
 }

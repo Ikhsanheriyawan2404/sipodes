@@ -42,9 +42,9 @@ Route::prefix('v1')->group(function () {
 
         // Admin Crud Potensi
         Route::apiResource('wisata', WisataController::class)->except('index', 'show');
-        Route::apiResource('budaya', WisataController::class)->except('index', 'show');
-        Route::apiResource('umkm', WisataController::class)->except('index', 'show');
-        Route::apiResource('produksi-pangan', WisataController::class)->except('index', 'show');
+        Route::apiResource('budaya', BudayaController::class)->except('index', 'show');
+        Route::apiResource('umkm', UmkmController::class)->except('index', 'show');
+        Route::apiResource('produksi-pangan', ProduksiPanganController::class)->except('index', 'show');
 
         // Store Multi Image
         Route::post('wisata/{id}/image', [WisataController::class, 'upload']);

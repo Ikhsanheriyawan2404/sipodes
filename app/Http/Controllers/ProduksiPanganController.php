@@ -13,7 +13,7 @@ class ProduksiPanganController extends Controller
     public function index()
     {
         return view('pangan.index', [
-            'produksi-pangan' =>  ProduksiPangan::with('images')->get(),
+            'produksiPangan' =>  ProduksiPangan::with('images')->get(),
         ]);
     }
 

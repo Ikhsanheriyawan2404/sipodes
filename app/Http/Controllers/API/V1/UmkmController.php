@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\Desa;
-use App\Models\Umkm;
-use App\Models\Gambar;
-use Illuminate\Support\Env;
+use App\Models\{Desa, Gambar, Umkm};
 use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UmkmStoreRequest;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\UmkmUpdateRequest;
-use function PHPSTORM_META\registerArgumentsSet;
+use App\Http\Requests\{UmkmUpdateRequest, UmkmStoreRequest};
 
 class UmkmController extends Controller
 {
@@ -126,7 +121,7 @@ class UmkmController extends Controller
         }
 
         $client = new \GuzzleHttp\Client();
-        $url = env ('PARENT_URL') . '/umkm/' . Desa::first()->code . '/' . $thumbnail->id;
+        $url = env ('PARENT_URL') . '/umkm/' . Desa::first()->code . '/' . $umkm->id;
 
         try {
             DB::transaction(function () use ($params, $client, $url, $thumbnail, $umkm) {
