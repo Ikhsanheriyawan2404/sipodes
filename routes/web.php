@@ -57,9 +57,9 @@ Route::middleware('auth')->group(function () {
 
     // Produksi Pangan
     Route::resource('produksi-pangan', ProduksiPanganController::class);
-    Route::get('produksi-pangan/{produksi-pangan}/gambar', [ProduksiPanganController::class, 'pageUpload'])->name('produksi-pangan.gambar');
-    Route::post('produksi-pangan/{produksi-pangan}/gambar', [ProduksiPanganController::class, 'upload'])->name('produksi-pangan.upload');
-    Route::delete('produksi-pangan/{gambar}/gambar', [ProduksiPanganController::class, 'deleteImage'])->name('umkm.deleteImage');
+    Route::get('produksi-pangan/{produksi_pangan}/gambar', [ProduksiPanganController::class, 'pageUpload'])->name('produksi-pangan.gambar');
+    Route::post('produksi-pangan/{produksi_pangan}/gambar', [ProduksiPanganController::class, 'upload'])->name('produksi-pangan.upload');
+    Route::delete('produksi-pangan/{gambar}/gambar', [ProduksiPanganController::class, 'deleteImage'])->name('produksi-pangan.deleteImage');
 });
 
 

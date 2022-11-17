@@ -10,7 +10,7 @@
                 <div class="card-header">Data Gambar {{ $produksiPangan->name }}</div>
 
                 <div class="card-body table-responsive">
-                    <form action="{{ route('produksi-pangan.upload', $budaya->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('produksi-pangan.upload', $produksiPangan->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                         <div class="row my-3">
                             <div class="col-md-5">

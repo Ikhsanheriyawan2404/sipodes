@@ -32,7 +32,7 @@ class ProduksiPanganController extends Controller
     {
         $produksiPangan = ProduksiPangan::find($id);
         return view('pangan.edit', [
-            'produksi-pangan' => $produksiPangan,
+            'produksiPangan' => $produksiPangan,
         ]);
     }
 
@@ -64,7 +64,7 @@ class ProduksiPanganController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
+        return redirect()->route('produksi-pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
     }
 
     public function update(PanganUpdateRequest $request, $id)
@@ -103,14 +103,14 @@ class ProduksiPanganController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
 
-        return redirect()->route('pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
+        return redirect()->route('produksi-pangan.index')->with('success', 'Data produksi pangan berhasil dimasukkan!');
     }
 
     public function pageUpload($id)
     {
         $produksiPangan = ProduksiPangan::find($id);
         return view('pangan.upload', [
-            'produksi-pangan' => $produksiPangan,
+            'produksiPangan' => $produksiPangan,
         ]);
     }
 

@@ -34,6 +34,6 @@ class CreateProduksiPanganTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('produksi_pangans');
+        Schema::dropIfExists('produksi_pangan');
     }
 }

@@ -10,7 +10,7 @@
                 <div class="card-header">{{ __('Edit Data Pangan') }}</div>
 
                 <div class="card-body table-responsive">
-                    <form action="{{ route('budaya.update', $produksiPangan->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('produksi-pangan.update', $produksiPangan->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <input type="hidden" value="{{ $produksiPangan->id }}">

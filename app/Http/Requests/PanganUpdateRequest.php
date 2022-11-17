@@ -24,9 +24,9 @@ class PanganUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255|unique:pangan,name' . $this->id,
+            'name' => 'required|max:255|unique:produksi_pangan,name,' . $this->produksi_pangan,
             'location' => 'required|max:255',
-            'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2058',
+            'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
             'description' => 'required',
         ];
