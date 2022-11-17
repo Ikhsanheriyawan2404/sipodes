@@ -69,7 +69,7 @@ class WisataController extends Controller
             return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
         }
 
-        return response()->json(new ApiResource(201, true, 'Data Wisata Berhasil Dimasukkan'), 201);
+        return response()->json(new ApiResource(201, true, 'Data Wisata Berhasil Dibuat'), 201);
     }
 
     public function upload($id)
