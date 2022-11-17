@@ -61,7 +61,7 @@
                                 <a class="nav-link" href="{{ route('wisata.index') }}">{{ __('Wisata') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('Budaya') }}</a>
+                                <a class="nav-link" href="{{ route('budaya.index') }}">{{ __('Budaya') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('wisata.create') }}">{{ __('UMKM') }}</a>
