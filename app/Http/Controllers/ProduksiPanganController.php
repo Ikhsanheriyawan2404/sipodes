@@ -36,7 +36,7 @@ class ProduksiPanganController extends Controller
     {
         $produksiPangan = ProduksiPangan::find($id);
         return view('produksi-pangan.edit', [
-            'produksi-pangan' => $produksiPangan,
+            'produksiPangan' => $produksiPangan,
         ]);
     }
 
