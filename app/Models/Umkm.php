@@ -10,7 +10,7 @@ class Umkm extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'description', 'contact'];
+    protected $fillable = ['name', 'slug', 'meta_description', 'meta_keyword', 'thumbnail', 'location', 'description', 'contact', 'type_umkm'];
     protected $table = 'umkm';
     protected $hidden = ['updated_at'];
     protected $casts = [

@@ -14,7 +14,7 @@ class Desa extends Model
     use HasFactory;
 
     protected $table = 'desa';
-    protected $fillable = ['code', 'description', 'district_code', 'city_code', 'url', 'logo'];
+    protected $fillable = ['code', 'description', 'struktur', 'facebook','instagram', 'phone_number','district_code', 'city_code', 'url', 'logo'];
     protected $hidden = ['created_at', 'updated_at'];
 
     public function getImagePathAttribute()
@@ -22,7 +22,7 @@ class Desa extends Model
         return URL::to('/') . '/storage/' . $this->logo;
     }
 
-    public function getImageStrukutAttribute()
+    public function getImageStrukturAttribute()
     {
         return URL::to('/') . '/storage/' . $this->struktur;
     }

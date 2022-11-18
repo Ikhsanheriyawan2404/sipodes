@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('desa', [DesaController::class, 'store'])->name('desa.store');
     Route::get('desa/edit', [DesaController::class, 'edit'])->name('desa.edit');
     Route::put('desa/edit', [DesaController::class, 'update'])->name('desa.update');
+    Route::get('desa/{id}', [DesaController::class, 'show'])->name('desa.show');
 
     // Galeri
     Route::get('galeri', [GaleriController::class, 'index'])->name('galeri.index');

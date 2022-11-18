@@ -28,6 +28,7 @@ class UmkmUpdateRequest extends FormRequest
             'location' => 'required|max:255',
             'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
+            'type_umkm'     =>'required',
             'description' => 'required',
         ];
     }

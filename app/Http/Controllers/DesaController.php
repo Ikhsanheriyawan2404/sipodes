@@ -29,6 +29,13 @@ class DesaController extends Controller
         ]);
     }
 
+    public function show($id)
+    {
+        $desa = Desa::with('desa')->find($id);
+        response()->json($desa);
+        return response()->json($desa);
+    }
+
     public function store(DesaStoreRequest $request)
     {
         $desa = Desa::first();
@@ -113,6 +120,6 @@ class DesaController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
-        return redirect()->route('home')->with('success', 'Data desa berhasil dimasukkan!');
+        return redirect()->route('desa.index')->with('success', 'Data desa berhasil dimasukkan!');
     }
 }
