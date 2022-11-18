@@ -39,6 +39,17 @@
                 </small>
             @enderror
         </div>
+        <div class="col-md-6">
+        <div class="form-group">
+            <label for="type_umkm">Type UMKM <span class="text-danger">*</span></label>
+            <input type="text" name="type_umkm" id="type_umkm" class="form-control form-control-sm" value="{{ $umkm->type_umkm ?? old('type_umkm') }}"
+                placeholder="pertanian/peternakan/perikanan/perkebunan">
+            @error('type_umkm')
+                <small class="text-danger">
+                    {{ $message }}
+                </small>
+            @enderror
+        </div>
         <div class="form-group">
             <label for="contact">Kontak <span class="text-danger">* <small>(format harus diawali 62)</small></span></label>
             <input type="number" name="contact" id="contact" class="form-control form-control-sm" value="{{ $umkm->contact ?? old('contact') }}" placeholder="6281234567890">

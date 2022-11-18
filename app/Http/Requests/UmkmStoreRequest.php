@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class UmkmStoreRequest extends FormRequest
 {
@@ -28,6 +29,7 @@ class UmkmStoreRequest extends FormRequest
             'location' => 'required|max:255',
             'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
+            'type_umkm'   => 'required',
             'description' => 'required',
         ];
     }

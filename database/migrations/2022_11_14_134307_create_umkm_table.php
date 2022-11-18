@@ -23,7 +23,7 @@ class CreateUmkmTable extends Migration
             $table->string('thumbnail');
             $table->string('contact');
             $table->text('description');
-            $table->text('mat');
+            $table->text('type_umkm');
             $table->timestamps();
         });
     }

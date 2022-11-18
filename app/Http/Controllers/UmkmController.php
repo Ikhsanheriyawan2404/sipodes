@@ -46,7 +46,9 @@ class UmkmController extends Controller
             'description' => request('description'),
             'location' => request('location'),
             'figure' => request('figure'),
+            'type_umkm'     =>request('type_umkm'),
             'contact' => request('contact'),
+            'type_umkm'     =>request('type_umkm'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
         ];
@@ -80,6 +82,7 @@ class UmkmController extends Controller
             'price' => request('price'),
             'figure' => request('figure'),
             'contact' => request('contact'),
+            'type_umkm'     =>request('type_umkm'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
         ];
