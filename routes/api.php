@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\V1\{AuthController, DesaController, WisataController, BudayaController, GeneralController, ProduksiPanganController, UmkmController, GaleriController, SliderController};
+use App\Http\Controllers\API\V1\{AuthController, DesaController, WisataController, BudayaController, GeneralController, ProduksiPanganController, UserController, UmkmController, GaleriController, SliderController};
 
 Route::prefix('v1')->group(function () {
 
@@ -23,14 +23,6 @@ Route::prefix('v1')->group(function () {
 
     Route::get('produksi-pangan', [ProduksiPanganController::class, 'index']);
     Route::get('produksi-pangan/{id}', [ProduksiPanganController::class, 'show']);
-
-    // Galeri & Slider
-    Route::get('galeri', [GaleriController::class, 'index']);
-    Route::post('galeri', [GaleriController::class, 'store']);
-    Route::delete('galeri/{galeri}', [GaleriController::class, 'destroy']);
-    Route::get('slider', [SliderController::class, 'index']);
-    Route::post('slider', [SliderController::class, 'store']);
-    Route::delete('slider/{slider}', [SliderController::class, 'destroy']);
 
     // Get Profile Desa
     Route::get('desa', [DesaController::class, 'index']);
@@ -58,6 +50,17 @@ Route::prefix('v1')->group(function () {
 
         Route::post('produksi-pangan/{id}/image', [ProduksiPanganController::class, 'upload']);
         Route::delete('produksi-pangan/{gambar}/image', [ProduksiPanganController::class, 'deleteImage']);
+
+        // Galeri & Slider
+        Route::get('galeri', [GaleriController::class, 'index']);
+        Route::post('galeri', [GaleriController::class, 'store']);
+        Route::delete('galeri/{galeri}', [GaleriController::class, 'destroy']);
+        Route::get('slider', [SliderController::class, 'index']);
+        Route::post('slider', [SliderController::class, 'store']);
+        Route::delete('slider/{slider}', [SliderController::class, 'destroy']);
+
+        // Users Management
+        ROute::apiResource('users', UserController::class);
 
         // Logout
         Route::post('logout', [AuthController::class, 'logout']);
