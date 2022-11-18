@@ -23,6 +23,7 @@ class CreateBudayaTable extends Migration
             $table->string('figure');
             $table->string('thumbnail');
             $table->string('contact');
+            $table->string('type_budaya');
             $table->text('description');
             $table->timestamps();
         });
