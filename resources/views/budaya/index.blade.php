@@ -69,6 +69,7 @@ aria-hidden="true">
                     <button class="list-group-item-action list-group-item">Lokasi : <i id="location"></i></button>
                     <button class="list-group-item-action list-group-item">Figure : <i id="figure"></i></button>
                     <button class="list-group-item-action list-group-item">Contact : <i id="contact"></i></button>
+                    <button class="list-group-item-action list-group-item">Type Budaya : <i id="type_budaya"></i></button>
                     <button class="list-group-item-action list-group-item"><img id="thumbnail" width="200"></button>
                     <button class="list-group-item-action list-group-item"><i id="description"></i></button>
                     <button class="list-group-item-action list-group-item">Dibuat : <i id="createdAt"></i></button>
@@ -95,6 +96,7 @@ aria-hidden="true">
                     $('#location').html(data.location);
                     $('#figure').html(data.figure);
                     $('#contact').html(data.contact);
+                    $('#type_budaya').html(data.type_budaya);
                     $('#description').html(data.description);
                     $('#createdAt').html(data.created_at);
                     $('#thumbnail').attr('src', '/storage/' + data.thumbnail);
