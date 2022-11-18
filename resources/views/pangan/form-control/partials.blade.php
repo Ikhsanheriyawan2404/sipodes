@@ -40,7 +40,7 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="type_produksi_pangan">Kontak <span class="text-danger"></span></label>
+            <label for="type_produksi_pangan">Tipe Produksi Pangan <span class="text-danger"></span></label>
             <input type="number" name="type_produksi_pangan" id="type_produksi_pangan" class="form-control form-control-sm" value="{{ $produksiPangan->type_produksi_pangan ?? old('type_produksi_pangan') }}"
             placeholder="pertanian/perkebunan/peternakan/perikanan">
             @error('type_produksi_pangan')

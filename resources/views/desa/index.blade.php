@@ -4,11 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+        <h1>DESA</h1>
         @include('components.alerts')
             @if (!$desa)
             <a href="{{ route('desa.create', []) }}" class="btn btn-sm btn-primary my-3">Tambah Desa</a>
             @endif
-            <h1>DESA</h1>
             <div class="card">
                 <div class="card-header">{{ __('Data Desa') }}</div>
 
@@ -25,7 +25,6 @@
                                 <td>Instagram</td>
                                 <td>Logo</td>
                                 <td>Struktur Organisasi</td>
-                                <td>Deskripsi</td>
                                 <td>Action</td>
                             </tr>
                         </thead>
@@ -41,8 +40,8 @@
                                 <td>{{ $desa->phone_number }}</td>
                                 <td><img src="{{ $desa->imagePath }}" width="200"></td>
                                 <td><img src="{{ $desa->imageStruktur }}" width="200"></td>
-                                <td>{{ $desa->description }}</td>
                                 <td>
+                                    <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $desa->id }}" id="btnDetails">Detail</a>
                                     <a class="btn btn-sm btn-primary" href="{{ route('desa.edit') }}">Edit</a>
                             </tr>
                             @else
@@ -57,4 +56,52 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModal" style="display: none;"
+aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModal">desa Detail</h5>
+                <button type="button" class="btn close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    <button class="list-group-item-action list-group-item">Lokasi : <i id="code"></i></button>
+                    <button class="list-group-item-action list-group-item">Nama : <i id="name"></i></button>
+                    <button class="list-group-item-action list-group-item"><img id="logo" width="200"></button>
+                    <button class="list-group-item-action list-group-item"><img id="struktur" width="200"></button>
+                    <button class="list-group-item-action list-group-item"><i id="description"></i></button>
+                    <button class="list-group-item-action list-group-item">Dibuat : <i id="createdAt"></i></button>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function () {
+            $('body').on('click', '#btnDetails', function () {
+                var desa_id = $(this).data('id');
+                $.get("{{ route('desa.index') }}" + '/' + desa_id, function(data) {
+                    $('#detailsModal').modal('show');
+                    $('#desa_id').val(data.id);
+                    $('#code').html(data.code);
+                    $('#name').html(data.desa.name);
+                    $('#description').html(data.description);
+                    $('#createdAt').html(data.created_at);
+                    $('#logo').attr('src', '/storage/' + data.logo);
+                    $('#struktur').attr('src', '/storage/' + data.struktur);
+                })
+            })
+        });
+    </script>
+@endpush

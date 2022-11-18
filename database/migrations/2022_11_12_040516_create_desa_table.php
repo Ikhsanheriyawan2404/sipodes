@@ -19,7 +19,7 @@ class CreateDesaTable extends Migration
             $table->char('district_code', 7);
             $table->char('city_code', 4);
             $table->string('url');
-            $table->string('struktur')->nullable();
+            $table->string('struktur');
             $table->string('phone_number')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
