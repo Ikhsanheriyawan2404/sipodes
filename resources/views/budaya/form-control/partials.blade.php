@@ -49,6 +49,15 @@
             @enderror
         </div>
         <div class="form-group">
+            <label for="type_budaya">Tipe Budaya <span class="text-danger">*</span></label>
+            <input type="text" name="type_budaya" id="type_budaya" class="form-control form-control-sm" value="{{ $budaya->type_budaya ?? old('type_budaya') }}">
+            @error('type_budaya')
+                <small class="text-danger">
+                    {{ $message }}
+                </small>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="contact">Kontak <span class="text-danger">* <small>(format harus diawali 62)</small></span></label>
             <input type="number" name="contact" id="contact" class="form-control form-control-sm" value="{{ $budaya->contact ?? old('contact') }}" placeholder="6281234567890">
             @error('contact')

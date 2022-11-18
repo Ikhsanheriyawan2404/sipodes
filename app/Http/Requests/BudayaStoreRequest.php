@@ -30,6 +30,7 @@ class BudayaStoreRequest extends FormRequest
             'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
             'description' => 'required',
+            'type_budaya' => 'required|max:255',
         ];
     }
 }

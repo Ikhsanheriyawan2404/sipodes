@@ -52,6 +52,7 @@ class BudayaController extends Controller
             'description'   =>request('description'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
+            'type_budaya' => request('type_budaya'),
         ];
 
         //Set HTTP Client
@@ -114,6 +115,7 @@ class BudayaController extends Controller
             'description' => request('description'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
+            'type_budaya' => request('type_budaya'),
         ];
 
         if(request('thumbnail'))

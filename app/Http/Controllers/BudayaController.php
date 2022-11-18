@@ -49,6 +49,7 @@ class BudayaController extends Controller
             'contact' => request('contact'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
+            'type_budaya' => request('type_budaya'),
         ];
 
         $client = new \GuzzleHttp\Client();
@@ -82,6 +83,7 @@ class BudayaController extends Controller
             'contact' => request('contact'),
             'meta_description' => request('meta_description'),
             'meta_keyword' => request('meta_keyword'),
+            'type_budaya' => request('type_budaya'),
         ];
 
         if (request('thumbnail')) {
