@@ -40,6 +40,16 @@
             @enderror
         </div>
         <div class="form-group">
+            <label for="type_produksi_pangan">Kontak <span class="text-danger"></span></label>
+            <input type="number" name="type_produksi_pangan" id="type_produksi_pangan" class="form-control form-control-sm" value="{{ $produksiPangan->type_produksi_pangan ?? old('type_produksi_pangan') }}"
+            placeholder="pertanian/perkebunan/peternakan/perikanan">
+            @error('type_produksi_pangan')
+                <small class="text-danger">
+                    {{ $message }}
+                </small>
+            @enderror
+        </div>
+        <div class="form-group">
             <label for="contact">Kontak <span class="text-danger">* <small>(format harus diawali 62)</small></span></label>
             <input type="number" name="contact" id="contact" class="form-control form-control-sm" value="{{ $produksiPangan->contact ?? old('contact') }}" placeholder="6281234567890">
             @error('contact')
