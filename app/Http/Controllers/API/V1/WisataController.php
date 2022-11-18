@@ -56,7 +56,7 @@ class WisataController extends Controller
 
         // Set HTTP Client
         $client = new \GuzzleHttp\Client();
-        // Url app parent
+        // Endpoint app parent
         $url = env('PARENT_URL') . '/wisata';
 
         try {

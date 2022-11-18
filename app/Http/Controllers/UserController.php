@@ -27,7 +27,11 @@ class UserController extends Controller
             'password' => 'required|max:255|confirmed',
         ]);
 
-        User::create(request()->all());
+        User::create([
+            'name' => request('name'),
+            'email' => request('email'),
+            'password' => password_hash(request('password'), PASSWORD_DEFAULT),
+        ]);
         return redirect()->route('users.index')->with('success', 'Data desa berhasil dimasukkan!');
     }
 
