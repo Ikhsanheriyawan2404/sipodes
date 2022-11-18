@@ -43,7 +43,7 @@
         <div class="form-group">
             <label for="type_umkm">Type UMKM <span class="text-danger">*</span></label>
             <input type="text" name="type_umkm" id="type_umkm" class="form-control form-control-sm" value="{{ $umkm->type_umkm ?? old('type_umkm') }}"
-                placeholder="pertanian/peternakan/perikanan/perkebunan">
+                placeholder="makanan/minuman/kerajinan/pakaian">
             @error('type_umkm')
                 <small class="text-danger">
                     {{ $message }}

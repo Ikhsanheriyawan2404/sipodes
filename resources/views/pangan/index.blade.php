@@ -17,6 +17,7 @@
                                 <td>Nama Produksi pangan</td>
                                 <td>Lokasi</td>
                                 <td>Kontak</td>
+                                <td>Type Produksi Pangan</td>
                                 <td>Action</td>
                             </tr>
                         </thead>
@@ -27,6 +28,7 @@
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->location }}</td>
                                 <td>{{ $data->contact }}</td>
+                                <td>{{ $data->type_produksi_pangan }}</td>
                                 <td>
                                     <form action="{{ route('produksi-pangan.destroy', $data->id) }}" method="post">
                                     <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $data->id }}" id="btnDetails">Detail</a>
@@ -63,6 +65,7 @@ aria-hidden="true">
                     <button class="list-group-item-action list-group-item">Nama : <i id="name"></i></button>
                     <button class="list-group-item-action list-group-item">Lokasi : <i id="location"></i></button>
                     <button class="list-group-item-action list-group-item">Contact : <i id="contact"></i></button>
+                    <button class="list-group-item-action list-group-item">Type Produksi Pangan : <i id="type_produksi_pangan"></i></button>
                     <button class="list-group-item-action list-group-item"><img id="thumbnail" width="200"></button>
                     <button class="list-group-item-action list-group-item"><i id="description"></i></button>
                     <button class="list-group-item-action list-group-item">Dibuat : <i id="createdAt"></i></button>
@@ -88,6 +91,7 @@ aria-hidden="true">
                     $('#name').html(data.name);
                     $('#location').html(data.location);
                     $('#contact').html(data.contact);
+                    $('#type_produksi_pangan').html(data.type_produksi);
                     $('#description').html(data.description);
                     $('#createdAt').html(data.created_at);
                     $('#thumbnail').attr('src', '/storage/' + data.thumbnail);

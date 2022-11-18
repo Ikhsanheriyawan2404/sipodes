@@ -28,6 +28,7 @@ class PanganUpdateRequest extends FormRequest
             'location' => 'required|max:255',
             'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
+            'type_produksi_pangan' => 'required',
             'description' => 'required',
         ];
     }
