@@ -19,6 +19,7 @@
                                 <td>Lokasi</td>
                                 <td>Tokoh</td>
                                 <td>Kontak</td>
+                                <td>Tipe Budaya</td>
                                 <td>Action</td>
                             </tr>
                         </thead>
@@ -30,6 +31,7 @@
                                 <td>{{ $data->location }}</td>
                                 <td>{{ $data->figure }}</td>
                                 <td>{{ $data->contact }}</td>
+                                <td>{{ $data->type_budaya }}</td>
                                 <td>
                                     <form action="{{ route('budaya.destroy', $data->id) }}" method="post">
                                     <a class="btn btn-sm btn-primary" href="javascript:void(0)" data-id="{{ $data->id }}" id="btnDetails">Detail</a>
