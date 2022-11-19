@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Models\{Desa, Gambar, Umkm};
 use Illuminate\Support\Str;
-
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
@@ -15,7 +14,8 @@ class UmkmController extends Controller
 {
     public function index()
     {
-        $umkm =  Umkm::with('images')->get();
+        $query = request('name');
+        $umkm =  Umkm::where('name', 'like', "%$query%")->with('images')->get();
         foreach ($umkm as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {

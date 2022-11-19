@@ -17,7 +17,8 @@ class ProduksiPanganController extends Controller
 {
     public function index()
     {
-        $produksiPangan =  ProduksiPangan::with('images')->get();
+        $query = request('name');
+        $produksiPangan =  ProduksiPangan::where('name', 'like', "%$query%")->with('images')->get();
         foreach ($produksiPangan as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {

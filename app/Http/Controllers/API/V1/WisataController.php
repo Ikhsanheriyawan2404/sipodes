@@ -14,7 +14,8 @@ class WisataController extends Controller
 {
     public function index()
     {
-        $wisata =  Wisata::with('images')->get();
+        $query = request('name');
+        $wisata =  Wisata::with('images')->where("name", "like", "%$query%")->get();
         foreach ($wisata as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {
