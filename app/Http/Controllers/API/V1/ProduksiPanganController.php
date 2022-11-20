@@ -17,7 +17,9 @@ class ProduksiPanganController extends Controller
 {
     public function index()
     {
-        $produksiPangan =  ProduksiPangan::with('images')->get();
+        $query = request('name');
+        $limit = request('limit');
+        $produksiPangan =  ProduksiPangan::limit($limit)->where('name', 'like', "%$query%")->with('images')->latest()->get();
         foreach ($produksiPangan as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {
@@ -29,7 +31,7 @@ class ProduksiPanganController extends Controller
 
     public function show($slug)
     {
-        $produksiPangan = ProduksiPangan::where('slug', $slug)->first();
+        $produksiPangan = ProduksiPangan::with('images')->where('slug', $slug)->first();
         if (!$produksiPangan) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }

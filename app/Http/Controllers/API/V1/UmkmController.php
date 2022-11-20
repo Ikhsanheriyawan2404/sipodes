@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\V1;
 
 use App\Models\{Desa, Gambar, Umkm};
 use Illuminate\Support\Str;
-
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
@@ -15,7 +14,9 @@ class UmkmController extends Controller
 {
     public function index()
     {
-        $umkm =  Umkm::with('images')->get();
+        $query = request('name');
+        $limit = request('limit');
+        $umkm =  Umkm::limit($limit)->where('name', 'like', "%$query%")->with('images')->latest()->get();
         foreach ($umkm as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {
@@ -27,7 +28,7 @@ class UmkmController extends Controller
 
     public function show($slug)
     {
-        $umkm = Umkm::where('slug', $slug)->first();
+        $umkm = Umkm::with('images')->where('slug', $slug)->first();
         if (!$umkm) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }

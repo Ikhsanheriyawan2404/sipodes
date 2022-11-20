@@ -19,6 +19,7 @@ class DesaController extends Controller
             return response()->json(new ApiResource(404, true, 'Belum ada data desa'), 404);
         }
         $desa->logo = $desa->imagePath;
+        $desa->struktur = $desa->imageStruktur;
         return response()->json(new ApiResource(200, true, 'Data Desa', $desa), 200);
     }
 

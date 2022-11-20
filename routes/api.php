@@ -27,6 +27,10 @@ Route::prefix('v1')->group(function () {
     // Get Profile Desa
     Route::get('desa', [DesaController::class, 'index']);
 
+    // Get Slider & Galeri
+    Route::get('slider', [SliderController::class, 'index']);
+    Route::get('galeri', [GaleriController::class, 'index']);
+
     Route::middleware('auth:sanctum')->group(function () {
 
         // Store Desa
@@ -52,10 +56,8 @@ Route::prefix('v1')->group(function () {
         Route::delete('produksi-pangan/{gambar}/image', [ProduksiPanganController::class, 'deleteImage']);
 
         // Galeri & Slider
-        Route::get('galeri', [GaleriController::class, 'index']);
         Route::post('galeri', [GaleriController::class, 'store']);
         Route::delete('galeri/{galeri}', [GaleriController::class, 'destroy']);
-        Route::get('slider', [SliderController::class, 'index']);
         Route::post('slider', [SliderController::class, 'store']);
         Route::delete('slider/{slider}', [SliderController::class, 'destroy']);
 

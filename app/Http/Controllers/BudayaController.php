@@ -11,7 +11,7 @@ use App\Http\Requests\{BudayaStoreRequest, BudayaUpdateRequest};
 class BudayaController extends Controller
 {
     public function index()
-    {
+{
         return view('budaya.index', [
             'budaya' =>  Budaya::with('images')->get(),
         ]);

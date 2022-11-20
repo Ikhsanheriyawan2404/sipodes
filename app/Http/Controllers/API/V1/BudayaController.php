@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\Desa;
-use App\Models\Budaya;
-use App\Models\Gambar;
+use App\Models\{Desa, Budaya, Gambar};
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\BudayaStoreRequest;
-use App\Http\Requests\BudayaUpdateRequest;
+use App\Http\Requests\{BudayaStoreRequest, BudayaUpdateRequest};
 
 class BudayaController extends Controller
 {
     public function index()
     {
-        $budaya =  Budaya::with('images')->get();
+        $query = request('name');
+        $limit = request('limit');
+        $budaya =  Budaya::limit($limit)->where('name', 'like', "%$query%")->with('images')->latest()->get();
         foreach ($budaya as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {
@@ -29,7 +28,7 @@ class BudayaController extends Controller
 
     public function show($slug)
     {
-        $budaya = Budaya::where('slug', $slug)->first();
+        $budaya = Budaya::with('images')->where('slug', $slug)->first();
         if (!$budaya) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }

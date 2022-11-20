@@ -14,7 +14,9 @@ class WisataController extends Controller
 {
     public function index()
     {
-        $wisata =  Wisata::with('images')->get();
+        $query = request('name');
+        $limit = request('limit');
+        $wisata =  Wisata::limit($limit)->with('images')->where("name", "like", "%$query%")->latest()->get();
         foreach ($wisata as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {
@@ -26,7 +28,7 @@ class WisataController extends Controller
 
     public function show($slug)
     {
-        $wisata = Wisata::where('slug', $slug)->first();
+        $wisata = Wisata::with('images')->where('slug', $slug)->first();
         if (!$wisata) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }
