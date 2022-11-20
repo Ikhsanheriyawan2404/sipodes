@@ -15,7 +15,8 @@ class UmkmController extends Controller
     public function index()
     {
         $query = request('name');
-        $umkm =  Umkm::where('name', 'like', "%$query%")->with('images')->get();
+        $limit = request('limit');
+        $umkm =  Umkm::limit($limit)->where('name', 'like', "%$query%")->with('images')->latest()->get();
         foreach ($umkm as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {
@@ -27,7 +28,7 @@ class UmkmController extends Controller
 
     public function show($slug)
     {
-        $umkm = Umkm::where('slug', $slug)->first();
+        $umkm = Umkm::with('images')->where('slug', $slug)->first();
         if (!$umkm) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }

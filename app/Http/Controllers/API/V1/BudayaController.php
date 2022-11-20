@@ -15,7 +15,8 @@ class BudayaController extends Controller
     public function index()
     {
         $query = request('name');
-        $budaya =  Budaya::where('name', 'like', "%$query%")->with('images')->get();
+        $limit = request('limit');
+        $budaya =  Budaya::limit($limit)->where('name', 'like', "%$query%")->with('images')->latest()->get();
         foreach ($budaya as $data) {
             $data->thumbnail = $data->imagePath;
             foreach($data->images as $item) {
@@ -27,7 +28,7 @@ class BudayaController extends Controller
 
     public function show($slug)
     {
-        $budaya = Budaya::where('slug', $slug)->first();
+        $budaya = Budaya::with('images')->where('slug', $slug)->first();
         if (!$budaya) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }
