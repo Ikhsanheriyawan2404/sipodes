@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         request()->validate([
             'name' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => 'required|unique:users|max:255',
             'password' => 'required|max:255|confirmed',
         ]);
 
@@ -27,7 +27,8 @@ class UserController extends Controller
             'email' => request('email'),
             'password' => password_hash(request('password'), PASSWORD_DEFAULT),
         ]);
-        return redirect()->route('users.index')->with('success', 'Data desa berhasil dimasukkan!', $data);
+
+        return response()->json(new ApiResource(200, true, 'Berhasil tambah user baru', $data),200);
     }
 
     public function update($id)
@@ -35,7 +36,7 @@ class UserController extends Controller
         $user = User::find($id);
         request()->validate([
             'name' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => 'required|max:255|unique:users,email,' . $user->id,
             'password' => 'confirmed',
         ]);
         $user->update([
@@ -43,6 +44,7 @@ class UserController extends Controller
             'email' => request('email'),
             'password' => request('password') ? password_hash(request('password'), PASSWORD_DEFAULT) : $user->password,
         ]);
-        return redirect()->route('users.index')->with('success', 'Data desa berhasil dimasukkan!');
+
+        return response()->json(new ApiResource(200, true, 'Berhasil edit user', null),200);
     }
 }

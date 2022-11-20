@@ -27,8 +27,8 @@ class WisataUpdateRequest extends FormRequest
             'name' => 'required|max:255|unique:wisata,name,' . $this->wisatum,
             'description' => 'required',
             'location' => 'required|max:255',
-            'longtitude' => 'required',
-            'latitude' => 'required',
+            'latitude' => 'required|numeric|between:-90,90',
+            'longtitude' => 'required|numeric|between:-180,180',
             'price' => 'required|max:255',
             'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
         ];

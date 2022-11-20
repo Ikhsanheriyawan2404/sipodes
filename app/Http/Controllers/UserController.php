@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         request()->validate([
             'name' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => 'required|max:255|unique:users',
             'password' => 'required|max:255|confirmed',
         ]);
 
@@ -48,7 +48,7 @@ class UserController extends Controller
         $user = User::find($id);
         request()->validate([
             'name' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => 'required|max:255|unique:users,email,' . $user->id   ,
             'password' => 'confirmed',
         ]);
         $user->update([

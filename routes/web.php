@@ -12,13 +12,8 @@ Route::get('login', [LoginController::class, 'showLoginForm']);
 Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::post('logout',  [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 Route::middleware('auth')->group(function () {
-    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::resource('users', UserController::class);
 
