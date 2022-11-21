@@ -26,7 +26,7 @@ class BudayaUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255|unique:budaya,name,' . $this->budaya,
-            'location' => 'required|max:255',
+            'location' => 'required',
             'figure' => 'required|max:255',
             'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',

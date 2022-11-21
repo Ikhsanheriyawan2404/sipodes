@@ -7,7 +7,7 @@
         <h1>DESA</h1>
         @include('components.alerts')
             @if (!$desa)
-            <a href="{{ route('desa.create', []) }}" class="btn btn-sm btn-primary my-3">Tambah Desa</a>
+            <a href="{{ route('desa.create', []) }}" class="btn btn-sm btn-primary my-3">Daftarkan Desa</a>
             @endif
             <div class="card">
                 <div class="card-header">{{ __('Data Desa') }}</div>

@@ -68,22 +68,22 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="longtitude">Longtitude <span class="text-danger">*</span> <small>Koordinat Lokasi maps
-                    longtitude maksimal 9 digit.</small></label>
-            <input type="text" name="longtitude" id="longtitude" class="form-control form-control-sm" value="{{ $wisata->longtitude ?? old('longtitude') }}"
+            <label for="latitude">Latitude <span class="text-danger">*</span><small>Koordinat maps latitude maksimal 9
+                    digit.</small></label>
+            <input type="text" name="latitude" id="latitude" class="form-control form-control-sm" value="{{ $wisata->latitude ?? old('latitude') }}"
                 placeholder="cth: 123.456789">
-            @error('longtitude')
+            @error('latitude')
                 <small class="text-danger">
                     {{ $message }}
                 </small>
             @enderror
         </div>
         <div class="form-group">
-            <label for="latitude">Latitude <span class="text-danger">*</span><small>Koordinat maps latitude maksimal 9
-                    digit.</small></label>
-            <input type="text" name="latitude" id="latitude" class="form-control form-control-sm" value="{{ $wisata->latitude ?? old('latitude') }}"
+            <label for="longtitude">Longtitude <span class="text-danger">*</span> <small>Koordinat Lokasi maps
+                    longtitude maksimal 9 digit.</small></label>
+            <input type="text" name="longtitude" id="longtitude" class="form-control form-control-sm" value="{{ $wisata->longtitude ?? old('longtitude') }}"
                 placeholder="cth: 123.456789">
-            @error('latitude')
+            @error('longtitude')
                 <small class="text-danger">
                     {{ $message }}
                 </small>

@@ -26,7 +26,7 @@ class UmkmStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255|unique:umkm',
-            'location' => 'required|max:255',
+            'location' => 'required',
             'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
             'type_umkm'   => 'required',

@@ -26,7 +26,7 @@ class WisataStoreRequest extends FormRequest
         return [
             'name' => 'required|max:255|unique:wisata',
             'description' => 'required',
-            'location' => 'required|max:255',
+            'location' => 'required',
             'latitude' => 'required|numeric|between:-90,90',
             'longtitude' => 'required|numeric|between:-180,180',
             'price' => 'required|max:255',

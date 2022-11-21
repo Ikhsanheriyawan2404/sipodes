@@ -25,7 +25,7 @@ class PanganUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255|unique:produksi_pangan,name,' . $this->produksi_pangan,
-            'location' => 'required|max:255',
+            'location' => 'required',
             'thumbnail' => 'image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',
             'type_produksi_pangan' => 'required',
