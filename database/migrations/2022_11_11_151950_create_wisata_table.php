@@ -20,7 +20,7 @@ class CreateWisataTable extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('thumbnail');
-            $table->string('location');
+            $table->text('location');
             $table->string('contact');
             $table->string('schedule');
             $table->string('price')->nullable();

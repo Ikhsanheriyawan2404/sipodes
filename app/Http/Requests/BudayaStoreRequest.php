@@ -25,7 +25,7 @@ class BudayaStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255|unique:budaya',
-            'location' => 'required|max:255',
+            'location' => 'required',
             'figure' => 'required|max:255',
             'thumbnail' => 'required|image|mimes:jpg,png,jpeg|max:2058',
             'contact'=>'required|max:255',

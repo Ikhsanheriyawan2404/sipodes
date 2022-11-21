@@ -6,7 +6,7 @@
         <div class="col-md-12">
         @include('components.alerts')
             <div class="card">
-                <div class="card-header">{{ __('Tambah village_code') }}</div>
+                <div class="card-header">{{ __('Tambah Desa') }}</div>
 
                 <div class="card-body">
                     <form action="{{ route('desa.store') }}" method="post" enctype="multipart/form-data">

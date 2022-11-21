@@ -20,7 +20,7 @@ class CreateProduksiPanganTable extends Migration
             $table->string('thumbnail');
             $table->string('name');
             $table->string('slug');
-            $table->string('location');
+            $table->text('location');
             $table->string('contact');
             $table->string('type_produksi_pangan');
             $table->text('description');
