@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers\API\V1;
 
-use App\Models\User;
 use App\Http\Resources\ApiResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\{Auth, Hash};
 
 class AuthController extends Controller
 {
     public function login()
     {
-        $validator = Validator::make(request()->all(),[
+        $validator = Validator::make(request()->all(), [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(new ApiResource(401, false, $validator->errors()), 422);
         }
 
