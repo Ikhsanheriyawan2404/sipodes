@@ -1,0 +1,6 @@
+projectKey=sipodes
+serverUrl=http://127.0.0.1:9000
+serverVersion=8.9.10.61524
+dashboardUrl=http://127.0.0.1:9000/dashboard?id=sipodes
+ceTaskId=AYSgxgGDcv9-eSAds5nh
+ceTaskUrl=http://127.0.0.1:9000/api/ce/task?id=AYSgxgGDcv9-eSAds5nh

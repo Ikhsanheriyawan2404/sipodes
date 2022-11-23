@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['sipodes.ieder.id'],
 
     'allowed_origins_patterns' => [],
 

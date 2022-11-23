@@ -19,7 +19,7 @@ class WisataController extends Controller
         $wisata =  Wisata::limit($limit)->with('images')->where("name", "like", "%$query%")->latest()->get();
         foreach ($wisata as $data) {
             $data->thumbnail = $data->imagePath;
-            foreach($data->images as $item) {
+            foreach ($data->images as $item) {
                 $item->image = $item->imagePath;
             }
         }
@@ -123,7 +123,7 @@ class WisataController extends Controller
         if (request('thumbnail')) {
             Storage::delete($wisata->thumbnail);
             $thumbnail = request()->file('thumbnail')->store('img/wisata');
-        } else if ($wisata->thumbnail) {
+        } elseif ($wisata->thumbnail) {
             $thumbnail = $wisata->thumbnail;
         }
 

@@ -12,6 +12,8 @@ use App\Http\Requests\{BudayaStoreRequest, BudayaUpdateRequest};
 
 class BudayaController extends Controller
 {
+    public $imagePath = 'img/budaya';
+
     public function index()
     {
         $query = request('name');
@@ -19,7 +21,7 @@ class BudayaController extends Controller
         $budaya =  Budaya::limit($limit)->where('name', 'like', "%$query%")->with('images')->latest()->get();
         foreach ($budaya as $data) {
             $data->thumbnail = $data->imagePath;
-            foreach($data->images as $item) {
+            foreach ($data->images as $item) {
                 $item->image = $item->imagePath;
             }
         }
@@ -30,7 +32,7 @@ class BudayaController extends Controller
     {
         $budaya = Budaya::with('images')->where('slug', $slug)->first();
         if (!$budaya) {
-            return new ApiResource(404, true, 'Data tidak ditemukan');
+            return new ApiResource(404, true, 'Data budaya tidak ditemukan');
         }
         $budaya->thumbnail = $budaya->imagePath;
         return new ApiResource(200, true, 'Detail Budaya', $budaya);
@@ -59,9 +61,9 @@ class BudayaController extends Controller
         //URL App parent
         $url = env('PARENT_URL') . '/budaya';
 
-        try{
+        try {
             DB::transaction(function () use ($params, $client, $url) {
-                $params['thumbnail'] = request()->file('thumbnail')->store('img/budaya');
+                $params['thumbnail'] = request()->file('thumbnail')->store($this->imagePath);
                 $budaya = Budaya::create($params);
                 $params['code_desa'] = Desa::first()->code;
                 $params['budaya_id'] = $budaya->id;
@@ -81,12 +83,12 @@ class BudayaController extends Controller
         ]);
 
         $budaya = Budaya::find($id);
-        if(!$budaya){
+        if (!$budaya) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }
         Gambar::create([
             'budaya_id' => $budaya->id,
-            'image' => request()->file('image')->store('img/budaya'),
+            'image' => request()->file('image')->store($this->imagePath),
             'alt' => request('alt')
         ]);
         return response()->json(new ApiResource(200, true, 'Data Gambar Budaya Berhasil Ditambahkan'), 200);
@@ -103,7 +105,7 @@ class BudayaController extends Controller
     {
         $request->validated();
         $budaya = Budaya::find($id);
-        if(!$budaya){
+        if (!$budaya) {
             return new ApiResource(404, true, 'Data tidak ditemukan');
         }
         $params = [
@@ -117,16 +119,15 @@ class BudayaController extends Controller
             'type_budaya' => request('type_budaya'),
         ];
 
-        if(request('thumbnail'))
-        {
+        if (request('thumbnail')) {
             Storage::delete($budaya->thumbnail);
-            $thumbnail = request()->file('thumbnail')->store('img/budaya');
-        } else if ($budaya->thumbnail) {
+            $thumbnail = request()->file('thumbnail')->store($this->imagePath);
+        } elseif ($budaya->thumbnail) {
             $thumbnail = $budaya->thumbnail;
         }
 
         $client = new \GuzzleHttp\Client();
-        $url = env ('PARENT_URL') . '/budaya/' . Desa::first()->code . '/' . $thumbnail->id;
+        $url = env('PARENT_URL') . '/budaya/' . Desa::first()->code . '/' . $thumbnail->id;
 
         try {
             DB::transaction(function () use ($params, $client, $url, $thumbnail, $budaya) {
@@ -139,22 +140,22 @@ class BudayaController extends Controller
         } catch (\Exception $e) {
             return response()->json(new ApiResource(400, false, $e->getMessage()), 400);
         }
-        return response()->json(new ApiResource(200,true, 'Data Budaya Berhasil Diupdate'), 200);
+        return response()->json(new ApiResource(200, true, 'Data Budaya Berhasil Diupdate'), 200);
     }
 
     public function destroy($id)
     {
         $budaya = Budaya::find($id);
-        if(!$budaya) {
+        if (!$budaya) {
             return response()->json(new ApiResource(404, false, 'Data Budaya Tidak Ditemukan'), 404);
         }
 
         $client = new \GuzzleHttp\Client();
         $url = env('PARENT_URL') . '/budaya/' . Desa::first()->code . '/' . $budaya->id;
 
-        try{
+        try {
             DB::transaction(function () use ($budaya, $client, $url) {
-                foreach ($budaya->images as $data){
+                foreach ($budaya->images as $data) {
                     Storage::delete($data->image);
                 }
 
